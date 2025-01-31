@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}The Puso Project{% endblock %}</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Custom CSS (optional) -->
+    <style>
+        .navbar-custom {
+            background-color: #f8f9fa; /* Light gray background */
+        }
+        .navbar-brand img {
+            height: 30px; /* Adjust the height of the logo */
+            width: auto; /* Maintain aspect ratio */
+            margin-right: 10px; /* Add spacing between logo and text */
+        }
+    </style>
+</head>
+<body>
+    <!-- Responsive Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-light navbar-custom">
+        <div class="container-fluid">
+            <!-- Brand/Logo with Heart Icon -->
+            <a class="navbar-brand" href="{{ url_for('index') }}">
+                <img src="{{ url_for('static', filename='The_Puso_Project_Logo.png') }}" alt="The Puso Project Logo">
+                The Puso Project
+            </a>
+
+            <!-- Toggle Button for Mobile -->
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <!-- Collapsible Menu -->
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav">
+                    <li class="nav-item mx-2"> <!-- Added mx-2 for spacing -->
+                        <a class="nav-link" href="{{ url_for('index') }}">Home</a>
+                    </li>
+                    <li class="nav-item mx-2"> <!-- Added mx-2 for spacing -->
+                        <a class="nav-link" href="#">CitizenDev</a>
+                    </li>
+                    <li class="nav-item mx-2"> <!-- Added mx-2 for spacing -->
+                        <a class="nav-link" href="#">Project Ideas</a>
+                    </li>                    
+                    <li class="nav-item mx-2"> <!-- Added mx-2 for spacing -->
+                        <a class="nav-link" href="#">Puso Projects</a>
+                    </li>
+                    <li class="nav-item mx-2"> <!-- Added mx-2 for spacing -->
+                        <a class="nav-link" href="#">Data Masters</a>
+                    </li>
+                    <li class="nav-item mx-2"> <!-- Added mx-2 for spacing -->
+                        <a class="nav-link" href="#">Mentors</a>
+                    </li>
+                    <li class="nav-item mx-2"> <!-- Added mx-2 for spacing -->
+                        <a class="nav-link" href="#">About DEP</a>
+                    </li>
+                    <li class="nav-item mx-2"> <!-- Added mx-2 for spacing -->
+                        <a class="nav-link" href="#">Contact</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Content Block -->
+    <div class="container mt-4">
+        {% block content %}{% endblock %}
+    </div>
+
+    <!-- Bootstrap JS (required for toggle functionality) -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
