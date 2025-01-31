@@ -64,6 +64,39 @@ def logout():
     session.pop('user', None)
     return redirect(url_for('index'))
 
+# New Routes for Menu Pages
+@app.route('/citizendev')
+def citizendev():
+    return render_template('citizendev.html')
+
+@app.route('/projectideas')
+def projectideas():
+    return render_template('projectideas.html')
+
+@app.route('/pusoprojects')
+def pusoprojects():
+    return render_template('pusoprojects.html')
+
+@app.route('/datamasters')
+def datamasters():
+    return render_template('datamasters.html')
+
+@app.route('/mentors')
+def mentors():
+    return render_template('mentors.html')
+
+@app.route('/blogs')
+def blogs():
+    return render_template('blogs.html')
+
+@app.route('/aboutdep')
+def aboutdep():
+    return render_template('aboutdep.html')
+
+@app.route('/contact')
+def contact():
+    return render_template('contact.html')
+
 @app.teardown_appcontext
 def close_connection(exception):
     db = getattr(g, '_database', None)
