@@ -4,12 +4,51 @@
 
 {% block content %}
     <div class="text-center">
-        <img src="/static/The_Puso_Project_Logo.png" alt="The Puso Project Logo" class="mb-4" width="400">
-        <h1>
-            <img src="/static/deplogo.png" alt="DEP Logo" class="mb-4" width="100">
-            Data Engineering Pilipinas
-        </h1>
-        <a href="/login" class="btn btn-primary">Login</a>
-        <a href="/signup" class="btn btn-secondary">Sign Up</a>
+        <div class="text-center">
+            <img src="/static/The_Puso_Project_Logo.png" alt="The Puso Project Logo" class="mb-4" width="250" style="margin-top: 20px;"> 
+        </div>
+    
+        <div class="text-center">        
+            <h4>
+                <img src="/static/deplogo.png" alt="DEP Logo" class="mb-4" width="100">
+                Data Engineering Pilipinas
+            </h4>
+        </div>
+
+        <div></div>
+        <!-- Learning Journey Section -->
+        <div class="container">
+            <h2 class="mb-4">Start Your Learning Journey</h2>
+
+            <!-- Technical Section -->
+            <div class="card mb-4">
+                <div class="card-body">
+                    <h3 class="card-title">Technical</h3>
+                    <p class="card-text">Explore technical skills and tools to become a data engineering expert.</p>
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item">
+                            <strong>CitizenDev</strong> - Beginner Level
+                            <a href="https://citizendev.code.sydney" target="_blank" class="btn btn-sm btn-outline-primary float-end">Visit Site</a>
+                        </li>
+                        <!-- Add more technical learning paths here -->
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Non-Technical Section -->
+            <div class="card">
+                <div class="card-body">
+                    <h3 class="card-title">Non-Technical</h3>
+                    <p class="card-text">Develop soft skills and knowledge to complement your technical expertise.</p>
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item">
+                            <strong>TBA</strong> - Coming Soon
+                            <button class="btn btn-sm btn-outline-secondary float-end" disabled>Learn More</button>
+                        </li>
+                        <!-- Add more non-technical learning paths here -->
+                    </ul>
+                </div>
+            </div>
+        </div>
     </div>
 {% endblock %}

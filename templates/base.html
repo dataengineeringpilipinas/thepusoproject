@@ -37,10 +37,7 @@
 
             <!-- Collapsible Menu -->
             <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav">
-                    <li class="nav-item mx-2"> <!-- Added mx-2 for spacing -->
-                        <a class="nav-link" href="{{ url_for('index') }}">Home</a>
-                    </li>
+                <ul class="navbar-nav me-auto">
                     <li class="nav-item mx-2"> <!-- Added mx-2 for spacing -->
                         <a class="nav-link" href="{{ url_for('startyourjourney') }}">Start Your Journey</a>
                     </li>
@@ -62,8 +59,15 @@
                     <li class="nav-item mx-2"> <!-- Added mx-2 for spacing -->
                         <a class="nav-link" href="{{ url_for('aboutdep') }}">About DEP</a>
                     </li>
-                    <li class="nav-item mx-2"> <!-- Added mx-2 for spacing -->
-                        <a class="nav-link" href="{{ url_for('contact') }}">Contact</a>
+                </ul>
+
+                <!-- Sign Up and Sign In Tabs -->
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item mx-2">
+                        <a class="nav-link" href="{{ url_for('signup') }}">Sign Up</a>
+                    </li>
+                    <li class="nav-item mx-2">
+                        <a class="nav-link" href="{{ url_for('login') }}">Login</a>
                     </li>
                 </ul>
             </div>
