@@ -10,79 +10,78 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <!-- Custom CSS (optional) -->
     <style>
-        .navbar-custom {
-            background-color: #f8f9fa; /* Light gray background */
+        html, body {
+            height: 100%;
+            margin: 0;
+            padding: 0;
         }
+
+        .navbar-custom {
+            background-color: #f8f9fa;
+        }
+
         .navbar-brand img {
-            height: 30px; /* Adjust the height of the logo */
-            width: auto; /* Maintain aspect ratio */
-            margin-right: 10px; /* Add spacing between logo and text */
+            height: 30px;
+            width: auto;
+            margin-right: 10px;
+        }
+
+        .content-wrapper {
+            min-height: calc(100vh - 60px); /* Adjust this based on your navbar height */
+            display: flex;
+            flex-direction: column;
+        }
+
+        .content {
+            flex: 1;
+        }
+
+        footer {
+            background-color: #343a40;
+            color: white;
+            font-size: 0.8rem; /* Make footer text smaller */
+            padding: 10px 0;
         }
     </style>
 </head>
 <body>
-    <!-- Responsive Navbar -->
     <nav class="navbar navbar-expand-lg navbar-light navbar-custom">
         <div class="container-fluid">
-            <!-- Brand/Logo with Heart Icon -->
             <a class="navbar-brand" href="{{ url_for('index') }}">
                 <img src="{{ url_for('static', filename='The_Puso_Project_Logo.png') }}" alt="The Puso Project Logo">
-                The Puso Project
             </a>
-
-            <!-- Toggle Button for Mobile -->
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
-
-            <!-- Collapsible Menu -->
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav me-auto">
-                    <li class="nav-item mx-2"> <!-- Added mx-2 for spacing -->
-                        <a class="nav-link" href="{{ url_for('datajobs') }}">Data Jobs</a>
-                    </li>
-                    <li class="nav-item mx-2"> <!-- Added mx-2 for spacing -->
-                        <a class="nav-link" href="{{ url_for('startyourjourney') }}">Start Your Journey</a>
-                    </li>
-                    <li class="nav-item mx-2"> <!-- Added mx-2 for spacing -->
-                        <a class="nav-link" href="{{ url_for('pusoprojects') }}">Puso Projects</a>
-                    </li>
-                    <li class="nav-item mx-2"> <!-- Added mx-2 for spacing -->
-                        <a class="nav-link" href="{{ url_for('projectideas') }}">Project Ideas</a>
-                    </li>                    
-                    <li class="nav-item mx-2"> <!-- Added mx-2 for spacing -->
-                        <a class="nav-link" href="{{ url_for('datamasters') }}">Data Masters</a>
-                    </li>
-                    <li class="nav-item mx-2"> <!-- Added mx-2 for spacing -->
-                        <a class="nav-link" href="{{ url_for('mentors') }}">Mentors</a>
-                    </li>
-                    <li class="nav-item mx-2"> <!-- Added mx-2 for spacing -->
-                        <a class="nav-link" href="{{ url_for('blogs') }}">Blogs</a>
-                    </li>                    
-                    <li class="nav-item mx-2"> <!-- Added mx-2 for spacing -->
-                        <a class="nav-link" href="{{ url_for('aboutdep') }}">About DEP</a>
-                    </li>
+                    <li class="nav-item mx-2"><a class="nav-link" href="{{ url_for('datajobs') }}">Data Jobs</a></li>
+                    <li class="nav-item mx-2"><a class="nav-link" href="{{ url_for('startyourjourney') }}">Start Your Journey</a></li>
+                    <li class="nav-item mx-2"><a class="nav-link" href="{{ url_for('pusoprojects') }}">Puso Projects</a></li>
+                    <li class="nav-item mx-2"><a class="nav-link" href="{{ url_for('projectideas') }}">Project Ideas</a></li>
+                    <li class="nav-item mx-2"><a class="nav-link" href="{{ url_for('datamasters') }}">Data Masters</a></li>
+                    <li class="nav-item mx-2"><a class="nav-link" href="{{ url_for('mentors') }}">Mentors</a></li>
+                    <li class="nav-item mx-2"><a class="nav-link" href="{{ url_for('blogs') }}">Blogs</a></li>
+                    <li class="nav-item mx-2"><a class="nav-link" href="{{ url_for('aboutdep') }}">About DEP</a></li>
                 </ul>
-
-                <!-- Sign Up and Sign In Tabs -->
                 <ul class="navbar-nav ms-auto">
-                    <li class="nav-item mx-2">
-                        <a class="nav-link" href="{{ url_for('signup') }}">Sign Up</a>
-                    </li>
-                    <li class="nav-item mx-2">
-                        <a class="nav-link" href="{{ url_for('login') }}">Login</a>
-                    </li>
+                    <li class="nav-item mx-2"><a class="nav-link" href="{{ url_for('signup') }}">Sign Up</a></li>
+                    <li class="nav-item mx-2"><a class="nav-link" href="{{ url_for('login') }}">Login</a></li>
                 </ul>
             </div>
         </div>
     </nav>
 
-    <!-- Content Block -->
-    <div class="container mt-4">
-        {% block content %}{% endblock %}
+    <div class="content-wrapper">
+        <div class="container mt-4 content">
+            {% block content %}{% endblock %}
+        </div>
+
+        {% block footer %}
+            {% include "basefooter.html" %}
+        {% endblock %}
     </div>
 
-    <!-- Bootstrap JS (required for toggle functionality) -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

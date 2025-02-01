@@ -4,14 +4,19 @@
 
 {% block content %}
     <div class="text-center">
-        <img src="/static/The_Puso_Project_Logo.png" alt="The Puso Project Logo" class="mb-4" width="250" style="margin-top: 20px;"> 
+        <img src="/static/The_Puso_Project_Logo.png" alt="The Puso Project Logo" class="mb-4" width="275" style="margin-top: 30px;"> 
     </div>
-
     <div class="text-center">        
-        <h4>
+        <h4 style="margin-bottom: 0;">
             <img src="/static/deplogo.png" alt="DEP Logo" class="mb-4" width="100">
             Data Engineering Pilipinas
         </h4>
-        <h5>A community-driven data journey: from learning to job search.</h5>
-    </div>
+    </div>    
+    <div class="text-center">        
+        <h5 style="margin-top: 0;">Data Skills. Community Support. Endless Possibilities.</h5>
+    </div>    
+{% endblock %}
+
+{% block footer %}
+    {% include "basefooter.html" %}
 {% endblock %}
