@@ -1,9 +1,41 @@
 {% extends "base.html" %}
 
-{% block title %}The Puso Project{% endblock %}
+{% block title %}Mentors - The Puso Project{% endblock %}
 
 {% block content %}
-    <div class="text-center">
-        <h1>Mentors</h1>
+    <!-- Mentors Grid -->
+    <div id="mentors" class="container mt-5">
+        <h2 class="text-center mb-4">Our Mentors</h2>
+        <div class="row">
+            <!-- Mentor 1 -->
+            <div class="col-md-4 mb-4">
+                <div class="card">
+                    <img src="{{ url_for('static', filename='TPP-Engramar.png') }}" class="card-img-top" alt="Mentor 1">
+                    <div class="card-body">
+                        <h5 class="card-title">Engramar Bollas</h5>
+                        <p class="card-text">Mentor | Python for Everybody Course</p>
+                        <p class="card-text">Fee: P0.00 per hour</p>
+                        <p class="card-text"><a href="https://koalendar.com/e/meet-with-code-sydney" target="_blank">Book a session</a></p>
+                        <p class="card-text"><a href="https://linkedin.com/in/engramarbollas" target="_blank">LinkedIn Profile</a></p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Mentor 2 -->
+            <div class="col-md-4 mb-4">
+                <div class="card">
+                    <img src="{{ url_for('static', filename='TPP-Jun.png') }}" class="card-img-top" alt="Mentor 1">
+                    <div class="card-body">
+                        <h5 class="card-title">Jun Miano</h5>
+                        <p class="card-text">Mentor | Python for Everybody Course</p>
+                        <p class="card-text">Fee: P0.00 per hour</p>
+                        <p class="card-text"><a href="https://koalendar.com/e/py4e-with-junmiano" target="_blank">Book a session</a></p>
+                        <p class="card-text"><a href="https://www.linkedin.com/in/junmiano1202/" target="_blank">LinkedIn Profile</a></p>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Add more mentors as needed -->
+        </div>
     </div>
 {% endblock %}
