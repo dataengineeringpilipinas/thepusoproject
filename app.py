@@ -65,6 +65,10 @@ def logout():
     return redirect(url_for('index'))
 
 # New Routes for Menu Pages
+@app.route('/datajobs')
+def datajobs():
+    return render_template('datajobs.html')
+
 @app.route('/startyourjourney')
 def startyourjourney():
     return render_template('startyourjourney.html')
