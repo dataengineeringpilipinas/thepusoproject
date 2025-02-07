@@ -3,8 +3,8 @@
 ##### Checkout the forever work-in-progress here: [Link to project](https://www.thepusoproject.ph/)
 
 ## Pre-requisite
-##### [Python for Everybody](https://citizendev.code.sydney/)
-##### [Intro to Flask](https://prettyprinted.com/introflask/)
+##### [Step 1 | Python for Everybody](https://citizendev.code.sydney/)
+##### [Step 2 | Intro to Flask](https://prettyprinted.com/introflask/)
 
 
 ## How to contribute
