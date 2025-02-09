@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+
+{% block title %}The Puso Project{% endblock %}
+
+{% block content %}
+
+        <div class="text-center">
+            <img src="/static/The_Puso_Project_Logo.png" alt="The Puso Project Logo" class="mb-4" width="250" style="margin-top: 20px;"> 
+        </div>
+
+        <div class="text-center">        
+            <h4>
+                <img src="/static/deplogo.png" alt="DEP Logo" class="mb-4" width="100">
+                Data Engineering Pilipinas
+            </h4>
+        </div>
+        <div class="subheader">
+            <h2>Update Status</h2>
+        </div>  
+        <br/>
+        <h5>CitizenDev {{ username }}</h5>                
+
+        <form method="post">
+            {% for i in range(1, 18) %}
+                <div class="mb-3">
+                    <label for="status{{ i }}" class="form-label">{{ lessons[i-1] }}</label>
+                    <select class="form-select" id="status{{ i }}" name="status{{ i }}">
+                        <option value="To Do" {% if user[i + 2] == 'To Do' %} selected {% endif %}>To Do</option>
+                        <option value="Done" {% if user[i + 2] == 'Done' %} selected {% endif %}>Done</option>
+                    </select>
+                </div>
+            {% endfor %}
+            <button type="submit" class="btn btn-primary">Update</button>
+        </form>        
+                
+        <a href="{{ url_for('dashboard') }}" class="btn btn-secondary">Cancel</a>
+        <br>
+        <a href="{{ url_for('logout') }}" class="btn btn-danger">Logout</a>
+    </div>
+</body>
+</html>
+
+{% endblock %}

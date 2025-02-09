@@ -3,7 +3,43 @@
 {% block title %}The Puso Project{% endblock %}
 
 {% block content %}
-    <div class="text-center">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        .header {
+            text-align: center;
+            margin-bottom: 10px;
+        }
+        .subheader {
+            text-align: center;
+            margin-bottom: 10px;
+        }
+        .logo {
+            display: block;
+            margin: 0 auto;
+            max-width: 150px;
+            height: auto;
+        }
+        .testimonial {
+            max-width: 100%; /* Ensures the image is responsive */
+            height: auto;    /* Maintains aspect ratio */
+            display: block;  /* Ensures the image behaves as a block element */
+            margin: 0 auto;  /* Centers the image if needed */
+        }           
+        .about-section {
+            margin-top: 30px;
+            padding: 20px;
+            background-color: #f7f7f7;
+            border-radius: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
         <div class="text-center">
             <img src="/static/The_Puso_Project_Logo.png" alt="The Puso Project Logo" class="mb-4" width="250" style="margin-top: 20px;"> 
         </div>
@@ -15,40 +51,168 @@
             </h4>
         </div>
 
-        <div></div>
         <!-- Learning Journey Section -->
-        <div class="container">
-            <h2 class="mb-4">Start Your Learning Journey</h2>
-
-            <!-- Technical Section -->
-            <div class="card mb-4">
-                <div class="card-body">
-                    <h3 class="card-title">Technical</h3>
-                    <p class="card-text">Explore technical skills and tools to become a data engineering expert.</p>
-                    <ul class="list-group list-group-flush">
-                        <li class="list-group-item">
-                            <strong>CitizenDev</strong> - Beginner Level
-                            <a href="https://citizendev.code.sydney" target="_blank" class="btn btn-sm btn-outline-primary float-end">Visit Site</a>
-                        </li>
-                        <!-- Add more technical learning paths here -->
-                    </ul>
-                </div>
-            </div>
-
-            <!-- Non-Technical Section -->
-            <div class="card">
-                <div class="card-body">
-                    <h3 class="card-title">Non-Technical</h3>
-                    <p class="card-text">Develop soft skills and knowledge to complement your technical expertise.</p>
-                    <ul class="list-group list-group-flush">
-                        <li class="list-group-item">
-                            <strong>TBA</strong> - Coming Soon
-                            <button class="btn btn-sm btn-outline-secondary float-end" disabled>Learn More</button>
-                        </li>
-                        <!-- Add more non-technical learning paths here -->
-                    </ul>
-                </div>
-            </div>
+        <div class="subheader">
+            <h2>Start Your Learning Journey</h2>
         </div>
+        <!--
+        <div class="subheader">
+            <h2>Login</h2>
+        </div>            
+        -->
+        {% if error %}
+            <div class="alert alert-danger" role="alert">
+                Invalid username or password!
+            </div>
+        {% endif %}
+        <form method="post">
+            <div class="mb-3">
+                <label for="username" class="form-label">Username</label>
+                <input type="text" class="form-control" id="username" name="username" required>
+            </div>
+            <div class="mb-3">
+                <label for="password" class="form-label">Password</label>
+                <input type="password" class="form-control" id="password" name="password" required>
+            </div>
+            <button type="submit" class="btn btn-primary">Login</button>
+            <a href="{{ url_for('signup') }}" class="btn btn-link">Sign Up</a>
+        </form>
+        <br/>        
+        <!-- About Section -->
+        <div class="about-section">
+            <div class="row">
+                <div class="col-md-12">
+                    <h2>The Citizen Developer Programme</h2>
+                </div>                
+                <img src="{{ url_for('static', filename='py4e_progress.png') }}" alt="Plot" />
+            </div>
+            <br/>
+            <div class="row">
+                <div class="col-md-12">
+                    <h4>Welcome Message from Code.Sydney</h4>
+                    <p>Join us and become citizen developers to develop solutions for problems worth solving, one app at a time.</p>
+                    <iframe width="560" height="315" src="https://www.youtube.com/embed/I5s4xpHF7Zk?si=boITEngpj2aDMa3u" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+                    <p></p>
+                </div>
+                <br/>   
+                <br/>                                                
+                <div class="col-md-12">                                        
+                    <h4>How to join</h4>                    
+                    <p>Register anytime, learn at your pace and join the community to engage in discussions about your progress.</p>
+                </div>
+                <br/>   
+                <br/>                                                
+                <div class="col-md-12">                                        
+                    <h5>Course from Prof. Charles Severance</h5>                    
+                    <!-- <img src="/static/drchuck.jpg" alt="Prof. Charles Severance" width="176" height="176" /> -->
+                    <iframe width="560" height="315" src="https://www.youtube.com/embed/UjeNA_JtXME?si=RaIh2Ip1hdZAeFyX" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+                    <p>We will be using Python for Everybody from Professor Charles Severance, also known as <a href="https://www.dr-chuck.com/" target="_blank">Dr. Chuck</a>, is a well-known figure in the field of computer science and online education. He has made significant contributions to the development of educational platforms and resources, particularly in programming and web technologies.</p>
+                    <p>Dr. Chuck has been involved in various educational initiatives, including creating and teaching online courses on platforms like Coursera, edX, and Sakai. He is particularly recognised for his work in the area of Python programming, and his courses have attracted a wide audience of learners from around the world.</p>
+                    <p>In addition to his teaching and educational efforts, Dr. Chuck has been involved in research, writing, and speaking engagements focused on topics such as web development, learning analytics, and online education. Overall, Professor Charles Severance is a prominent figure in the intersection of computer science and education, known for his contributions to both fields.</p>
+                </div>
+            </div>
+            <br/>   
+            <!-- Course Details -->
+            <div class="row">
+                <div class="col-md-12">
+                    <h5>CitizenDev | Python for Everybody (PY4E)</h5>                    
+                    <a href="https://www.py4e.com/lessons" target="_blank" style="font-size: 12px;">Link to PY4E Course</a> 
+                    <ul>
+                        <li>1 | Getting Started</li>
+                        <li>2 | Why Program?</li>
+                        <li>3 | Variables, expressions and statements</li>
+                        <li>4 | Conditional Execution</li>
+                        <li>5 | Functions</li>
+                        <li>6 | Loops and Iterations</li>
+                        <li>7 | Strings</li>
+                        <li>8 | Files</li>
+                        <li>9 | Lists</li>
+                        <li>10 | Dictionaries</li>
+                        <li>11 | Tuples</li>
+                        <li>12 | Regular Expressions</li>
+                        <li>13 | Network Programming</li>
+                        <li>14 | Using Web Services</li>
+                        <li>15 | Object-Oriented Programming</li>
+                        <li>16 | Databases</li>
+                        <li>17 | Data Visualization</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Learning Outcomes -->
+            <div class="row">
+                <div class="col-md-12">
+                    <h5>Learning Outcomes</h5>                    
+                    <ul>
+                        <li>Basic understanding of Python syntax and semantics</li>
+                        <li>Basic understanding of Python program control flow</li>
+                        <li>Basic understanding of Python data structures</li>
+                        <li>Ability to explore and process open datasets</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-12">
+                    <h5>The Journey</h5>
+                </div>
+            </div>
+            <div>
+                <div>
+                    <ol>
+                        <li>Enrollment. See 'How to join the course' below.</li>
+                        <li>Google Form Submission</li>
+                        <li>Course Completion</li>
+                        <li>1-on-1 Course Recap</li>
+                        <li>DEP DataHub | DEP Puso Projects</li>
+                        <li>CitizenDev Capstone Certificate</li>
+                    </ol>
+                </div>
+            </div>
+        
+            <div class="row">
+                <div class="col-md-12">
+                    <h5>How to join the course</h5>
+                </div>
+            </div>
+            <div>
+                <div>
+                    <ol>
+                        <li>Tell us something about yourself by filling in this <a href="https://forms.gle/AoVFiC35zyZNSx8e8"
+                                target="_blank">Form.</a></li>
+                        <li>Jump in and start the lessons in <a href="https://www.py4e.com/lessons" target="_blank">PY4E</a>
+                            site.</li>
+                        <li>Sign up on this page to log your progress by clicking on the Register or Login button above or
+                            simply click <a href="https://citizendev.code.sydney/py4e">here.</a></li>
+                        <li>Share your progress and actively collaborate in <a href="https://discord.com/invite/buDgydz7J9"
+                                target="_blank">Discord</a>. We will wait for you there.</li>
+                    </ol>
+                </div>
+            </div>
+        
+            <div class="row">
+                <div class="col-md-12">
+                    <h5>Some key points about this course</h5>
+                </div>
+            </div>
+            <div>
+                <div>
+                    <ul>
+                        <li>The course is designed for complete beginners particularly those with zero coding knowledge.</li>
+                        <li>This website is solely used just for progress tracking purposes.</li>
+                        <li>Just follow Dr Chucks PY4E lessons and use the book as a complementing aid in your learning and
+                            update your progress here every time you finish a chapter.</li>
+                        <li>It is important to engage in Discord so we can handhold each other in this journey.</li>
+                        <li>Get a taste of what coding is all about. It might help you become a super-productive, rockstar 10x
+                            employee at work, or even lead to a career switch.</li>
+                        <li>Have fun, take everything easy and keep learning!</li>
+                    </ul>
+                </div>
+            </div>        
+
+        </div>
+        
     </div>
+</body>
+
 {% endblock %}

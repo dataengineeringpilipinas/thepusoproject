@@ -1,0 +1,17 @@
+PY4E Lesson 1 Getting Started
+PY4E Lesson 2 Why Program?
+PY4E Lesson 3 Variables, expressions and statements
+PY4E Lesson 4 Conditional Execution
+PY4E Lesson 5 Functions
+PY4E Lesson 6 Loops and Iterations
+PY4E Lesson 7 Strings
+PY4E Lesson 8 Files
+PY4E Lesson 9 Lists
+PY4E Lesson 10 Dictionaries
+PY4E Lesson 11 Tuples
+PY4E Lesson 12 Regular Expressions
+PY4E Lesson 13 Network Programming
+PY4E Lesson 14 Using Web Services
+PY4E Lesson 15 Object-Oriented Programming
+PY4E Lesson 16 Databases
+PY4E Lesson 17 Data Visualization
