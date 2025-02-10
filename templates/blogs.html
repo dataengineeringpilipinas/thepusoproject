@@ -1,9 +1,60 @@
 {% extends "base.html" %}
 
-{% block title %}The Puso Project{% endblock %}
+{% block title %}Blogs - Data Masters{% endblock %}
 
 {% block content %}
     <div class="text-center">
         <h1>Blogs</h1>
     </div>
+
+    <!-- DataTable Container -->
+    <div class="container mt-4">
+        <table id="projectIdeasTable" class="table table-striped table-bordered" style="width:100%">
+            <thead>
+                <tr>
+                    <th>Reel</th>
+                    <th>Topic</th>                    
+                    <th>Author</th>
+                    <th>Date Published</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>
+                        <iframe width="125" height="225" 
+                            src="https://youtube.com/embed/oh0X6EMKeUk?si=L_HxiAw3hZ5Sy7Wh" 
+                            title="YouTube video player" 
+                            frameborder="0" 
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+                            referrerpolicy="strict-origin-when-cross-origin" 
+                            allowfullscreen>
+                        </iframe>
+                    </td>
+                    <td><a href="https://github.com/dataengineeringpilipinas/thepusoproject/wiki/CitizenDev-%7C-Program-Logic-Formulation-(PLF)" target="_blank">Program Logic Formulation (PLF)</a></td>
+                    <td>Engramar Bollas</td>
+                    <td>January 27, 2025</td>
+                </tr>
+                <!-- Add more rows as needed -->
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Include DataTables CSS and JS -->
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.13.6/css/dataTables.bootstrap5.min.css">
+    <script type="text/javascript" src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap5.min.js"></script>
+
+    <!-- Initialize DataTable -->
+    <script>
+        $(document).ready(function() {
+            $('#projectIdeasTable').DataTable({
+                "paging": true, // Enable pagination
+                "searching": true, // Enable search bar
+                "ordering": true, // Enable column sorting
+                "info": true, // Show table information
+                "responsive": true // Make the table responsive
+            });
+        });
+    </script>
 {% endblock %}

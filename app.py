@@ -11,6 +11,7 @@ app = Flask(__name__)
 app.secret_key = 'your_secret_key'
 
 # Database configuration
+#DATABASE = '/home/engramar/thepusoproject/citizendevs.db'
 DATABASE = './citizendevs.db'
 
 def get_db():
@@ -194,13 +195,14 @@ def dashboard():
         # Adjust layout to make space for the headers and avoid truncation
         plt.subplots_adjust(left=0.1, right=0.95, top=0.85, bottom=0.25)
 
-        # Save the plot as an image
-        img_path = os.path.join('static', 'plot.png')
+        # Save the plot as an image        
+        #img_path = os.path.join('/home/engramar/thepusoproject/static', 'py4e_progress.png')        
+        img_path = os.path.join('static', 'py4e_progress.png')
         plt.savefig(img_path)
         plt.close()
 
         # Render the dashboard with the plot
-        return render_template("dashboard.html", username=username, users=users, user_status=user_status, graph_url=url_for('static', filename='plot.png'))
+        return render_template("dashboard.html", username=username, users=users, user_status=user_status, graph_url=url_for('static', filename='py4e_progress.png'))
 
     return redirect(url_for("startyourjourney")) 
 
@@ -227,6 +229,7 @@ def update(username):
 
         return redirect(url_for("dashboard"))
     else:
+        #fn = "/home/engramar/thepusoproject/lessons.txt"
         fn = "./lessons.txt"
         with open(fn) as fh:
             lessons = [line.rstrip() for line in fh.readlines()]
@@ -239,9 +242,9 @@ def update(username):
             "update.html", username=username, user=user, lessons=lessons
         )
 
-@app.route('/projectideas')
-def projectideas():
-    return render_template('projectideas.html')
+@app.route('/deptalents')
+def deptalents():
+    return render_template('deptalents.html')
 
 @app.route('/pusoprojects')
 def pusoprojects():
@@ -268,5 +271,5 @@ def contact():
     return render_template('contact.html')
 
 if __name__ == '__main__':
-    init_db()
+    #init_db()
     app.run(debug=True)
