@@ -89,10 +89,18 @@ def startyourjourney():
         cur.execute(f'SELECT COUNT(*) FROM user WHERE {column} = "Done"')
         py4e_done_counts[column] = cur.fetchone()[0]
 
+    # Query to get the total number of enrollments
+    cur.execute("SELECT COUNT(*) FROM user")
+    total_enrollments = cur.fetchone()[0]  # Total number of users
+
     cur.close()
 
     # Plot the graph
     fig, ax = plt.subplots(figsize=(12, 6))
+
+    # Add a title to the graph with total enrollments
+    ax.set_title(f"Total Enrollments: {total_enrollments}", fontsize=14, pad=20)
+
     bars = ax.bar(py4e_done_counts.keys(), py4e_done_counts.values(), color='#B6D0E2')
 
     # Additional formatting for the bar chart
@@ -113,7 +121,7 @@ def startyourjourney():
     plt.savefig(img_path)
     plt.close()
 
-    return render_template('startyourjourney.html', graph_url=url_for('static', filename='py4e_progress.png'))
+    return render_template('startyourjourney.html', graph_url=url_for('static', filename='py4e_progress.png'), total_enrollments=total_enrollments)
 
 @app.route("/dashboard")
 def dashboard():
@@ -261,6 +269,10 @@ def mentors():
 @app.route('/blogs')
 def blogs():
     return render_template('blogs.html')
+
+@app.route('/sandbox')
+def sandbox():
+    return render_template('sandbox.html')
 
 @app.route('/aboutdep')
 def aboutdep():
