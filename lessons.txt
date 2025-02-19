@@ -15,3 +15,4 @@ PY4E Lesson 14 Using Web Services
 PY4E Lesson 15 Object-Oriented Programming
 PY4E Lesson 16 Databases
 PY4E Lesson 17 Data Visualization
+PY4E Lesson 18 Introduction to Flask
