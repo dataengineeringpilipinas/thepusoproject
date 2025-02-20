@@ -21,12 +21,13 @@
         <h5>CitizenDev {{ username }}</h5>                
 
         <form method="post">
-            {% for i in range(1, 18) %}
+            {% for i in range(1, 19) %}
                 <div class="mb-3">
                     <label for="status{{ i }}" class="form-label">{{ lessons[i-1] }}</label>
                     <select class="form-select" id="status{{ i }}" name="status{{ i }}">
-                        <option value="To Do" {% if user[i + 2] == 'To Do' %} selected {% endif %}>To Do</option>
-                        <option value="Done" {% if user[i + 2] == 'Done' %} selected {% endif %}>Done</option>
+                        <!-- Adjust user access to match new column names: PY4E1 to PY4E18 -->
+                        <option value="To Do" {% if user['PY4E' + loop.index|string] == 'To Do' %} selected {% endif %}>To Do</option>
+                        <option value="Done" {% if user['PY4E' + loop.index|string] == 'Done' %} selected {% endif %}>Done</option>
                     </select>
                 </div>
             {% endfor %}
