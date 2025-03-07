@@ -5,6 +5,9 @@
 {% block content %}
     <div class="text-center">
         <h1>Data Jobs</h1>
+        <button id="modalBtn" type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#jobPostModal">
+            Add Job Post
+        </button>
     </div>
 
     <!-- DataTable Container -->
@@ -14,9 +17,12 @@
                 <tr>
                     <th>Date Posted</th>
                     <th>Job Title</th>
+                    <th>Job Category</th>
+                    <th>Work Setup</th>
                     <th>Company Name</th>
                     <th>Location</th>
                     <th>Salary Range</th>
+                    <th>Job Post Link</th>
                     <th>Application Deadline</th>
                 </tr>
             </thead>
@@ -27,11 +33,73 @@
                     <td></td>
                     <td></td>
                     <td></td>
-                    <td></td>                    
+                    <td></td>   
+                    <td></td>
+                    <td></td>
+                    <td></td>                 
                 </tr>
                 <!-- Add more rows as needed -->
             </tbody>
         </table>
+    </div>
+
+    <!-- Modal -->
+    <div class="modal fade" id="jobPostModal" tabindex="-1" aria-labelledby="jobPostModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="jobPostModalLabel">Add Job Post</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="jobPostForm" action="" method="POST">
+                        <div class="mb-3">
+                            <label for="datePosted" class="form-label">Date Posted</label>
+                            <input type="date" class="form-control" id="datePosted" name="datePosted" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="jobTitle" class="form-label">Job Title</label>
+                            <input type="text" class="form-control" id="jobTitle" name="jobTitle" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="jobCategory" class="form-label">Job Category</label>
+                            <input type="text" class="form-control" id="jobCategory" name="jobCategory" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="workSetup" class="form-label">Work Setup</label>
+                            <input type="text" class="form-control" id="workSetup" name="workSetup" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="companyName" class="form-label">Company Name</label>
+                            <input type="text" class="form-control" id="companyName" name="companyName" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="location" class="form-label">Location</label>
+                            <input type="text" class="form-control" id="location" name="location" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="salaryRange" class="form-label">Salary Range</label>
+                            <input type="text" class="form-control" id="salaryRange" name="salaryRange" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="jobPostLink" class="form-label">Job Post Link</label>
+                            <input type="url" class="form-control" id="jobPostLink" name="jobPostLink" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="applicationDeadline" class="form-label">Application Deadline</label>
+                            <input type="date" class="form-control" id="applicationDeadline" name="applicationDeadline" required>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Submit</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal-form">
+        <form action="" method="POST">
+            
+        </form>
     </div>
 
     <!-- Include DataTables CSS and JS -->
