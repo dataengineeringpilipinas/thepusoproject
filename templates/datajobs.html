@@ -4,10 +4,12 @@
 
 {% block content %}
     <div class="text-center">
-        <h1>Data Jobs</h1>
-        <button id="modalBtn" type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#jobPostModal">
-            Add Job Post
-        </button>
+        <form action="/check_login/" methods='GET'>
+            <h1>Data Jobs</h1>
+            <button id="modalBtn" type="submit" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#jobPostModal">
+                Add Job Post
+            </button>
+        </form>
     </div>
 
     <!-- DataTable Container -->
@@ -27,17 +29,19 @@
                 </tr>
             </thead>
             <tbody>
+                {% for datajob in datajobs %}
                 <tr>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>   
-                    <td></td>
-                    <td></td>
-                    <td></td>                 
+                    <td> {{ datajob.datePosted }} </td>
+                    <td> {{ datajob.jobTitle }} </td>
+                    <td> {{ datajob.jobCategory }} </td>
+                    <td> {{ datajob.workSetup }} </td>
+                    <td> {{ datajob.companyName }} </td>
+                    <td> {{ datajob.location }} </td>   
+                    <td> {{ datajob.salaryRange }} </td>
+                    <td> {{ datajob.jobPostLink }} </td>
+                    <td> {{ datajob.applicationDeadline }}</td>                 
                 </tr>
+                {% endfor %}
                 <!-- Add more rows as needed -->
             </tbody>
         </table>
@@ -49,10 +53,10 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="jobPostModalLabel">Add Job Post</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    <button type="button" onclick="" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <form id="jobPostForm" action="" method="POST">
+                    <form id="jobPostForm" action="/post_job" method="POST">
                         <div class="mb-3">
                             <label for="datePosted" class="form-label">Date Posted</label>
                             <input type="date" class="form-control" id="datePosted" name="datePosted" required>
@@ -94,12 +98,6 @@
                 </div>
             </div>
         </div>
-    </div>
-
-    <div class="modal-form">
-        <form action="" method="POST">
-            
-        </form>
     </div>
 
     <!-- Include DataTables CSS and JS -->
