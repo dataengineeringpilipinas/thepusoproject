@@ -54,19 +54,71 @@ def logout():
     return redirect(url_for('index'))
 
 # New Routes for Menu Pages
-@app.route('/datajobs')
+@app.route('/datajobs/', methods=['GET'])
 def datajobs():
-    return render_template('datajobs.html')
+    db = get_db()
+    cur = db.cursor()
+
+    # Create the user table if it doesn't exist
+    cur.execute(
+        "CREATE TABLE IF NOT EXISTS user (user_id INTEGER PRIMARY KEY, username TEXT, password TEXT, first_name TEXT, last_name TEXT)"
+    )
+
+    #Create the datajobs table if it doesn't exist
+    cur.execute(
+        "CREATE TABLE IF NOT EXISTS datajobs (id INTEGER PRIMARY KEY, datePosted TEXT, jobTitle TEXT, jobCategory TEXT, workSetup TEXT, companyName TEXT, location TEXT, salaryRange TEXT, jobPostLink TEXT, applicationDeadline TEXT)",
+    )
+
+    cur.execute("SELECT * FROM datajobs")
+    datajobs = cur.fetchall()
+    cur.close()
+
+    return render_template('datajobs.html', datajobs=datajobs)
+
+@app.route('/post_job/', methods=['POST'])
+def post_job():
+    # Get data from html form id = JobPostForm
+    datePosted = request.form['datePosted']
+    jobTitle = request.form['jobTitle']
+    jobCategory = request.form['jobCategory']
+    workSetup = request.form['workSetup']
+    companyName = request.form['companyName']
+    location = request.form['location']
+    salaryRange = request.form['salaryRange']
+    jobPostLink = request.form['jobPostLink']
+    applicationDeadline = request.form['applicationDeadline']
+
+    # Execute SQL query to insert form data into SQLite database
+    db = get_db()
+    cur = db.cursor()
+    cur.execute(
+        "INSERT INTO datajobs (datePosted, jobTitle, jobCategory, workSetup, companyName, location, salaryRange, jobPostLink, applicationDeadline) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)",
+        (datePosted, jobTitle, jobCategory, workSetup, companyName, location, salaryRange, jobPostLink, applicationDeadline)
+    )
+    db.commit()
+    cur.close()
+
+    return redirect(url_for('datajobs'))
+
+@app.route('/check_login/', methods=['GET'])
+def check_login():
+    """Check if the user is logged in and redirect accordingly."""
+    if 'username' in session:
+        print('User is logged in!')
+        return redirect(url_for('datajobs'))  # Redirect to Data Jobs page
+    else:
+        print('User is not logged in!')
+        return redirect(url_for('index'))  # Redirect to homepage or login page
 
 @app.route('/startyourjourney', methods=['GET', 'POST'])
 def startyourjourney():
     if request.method == 'POST':
         username = request.form['username']
         password = request.form['password']
-        
+
         db = get_db()
         cur = db.cursor()
-
+    
         # Check if the username and password match in the database
         cur.execute('SELECT * FROM user WHERE username = ? AND password = ?', (username, password))
         user = cur.fetchone()
@@ -76,7 +128,7 @@ def startyourjourney():
             session['username'] = username  # Store user in session
             return redirect(url_for('dashboard'))  # Redirect to the dashboard page
         else:
-            return 'Invalid credentials. <a href="/startyourjourney">Try again</a>'
+            return 'Invalid credentials.'
 
     db = get_db()
     cur = db.cursor()
