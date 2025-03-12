@@ -14,10 +14,13 @@ app.secret_key = 'your_secret_key'
 #DATABASE = '/home/engramar/thepusoproject/citizendevs.db'
 DATABASE = './citizendevs.db'
 
-def get_db():
+def get_db(db_name=None):
     """Open a new database connection if there is none yet for the current application context."""
+    if db_name is None:
+        db_name = DATABASE  # Default to the main database if no name is provided
+
     if 'db' not in g:
-        g.db = sqlite3.connect(DATABASE, check_same_thread=False)
+        g.db = sqlite3.connect(db_name, check_same_thread=False)
         g.db.row_factory = sqlite3.Row  # Allows access by column name
     return g.db
 
@@ -53,10 +56,9 @@ def logout():
     session.pop('user', None)
     return redirect(url_for('index'))
 
-# New Routes for Menu Pages
 @app.route('/datajobs/', methods=['GET'])
 def datajobs():
-    db = get_db()
+    db = get_db('./datajobs.db')  # Use datajobs.db
     cur = db.cursor()
 
     # Create the user table if it doesn't exist
@@ -64,7 +66,7 @@ def datajobs():
         "CREATE TABLE IF NOT EXISTS user (user_id INTEGER PRIMARY KEY, username TEXT, password TEXT, first_name TEXT, last_name TEXT)"
     )
 
-    #Create the datajobs table if it doesn't exist
+    # Create the datajobs table if it doesn't exist
     cur.execute(
         "CREATE TABLE IF NOT EXISTS datajobs (id INTEGER PRIMARY KEY, datePosted TEXT, jobTitle TEXT, jobCategory TEXT, workSetup TEXT, companyName TEXT, location TEXT, salaryRange TEXT, jobPostLink TEXT, applicationDeadline TEXT)",
     )
@@ -89,7 +91,7 @@ def post_job():
     applicationDeadline = request.form['applicationDeadline']
 
     # Execute SQL query to insert form data into SQLite database
-    db = get_db()
+    db = get_db('./datajobs.db')  # Use datajobs.db
     cur = db.cursor()
     cur.execute(
         "INSERT INTO datajobs (datePosted, jobTitle, jobCategory, workSetup, companyName, location, salaryRange, jobPostLink, applicationDeadline) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)",
@@ -115,10 +117,10 @@ def startyourjourney():
     if request.method == 'POST':
         username = request.form['username']
         password = request.form['password']
-
+        
         db = get_db()
         cur = db.cursor()
-    
+
         # Check if the username and password match in the database
         cur.execute('SELECT * FROM user WHERE username = ? AND password = ?', (username, password))
         user = cur.fetchone()
@@ -128,7 +130,7 @@ def startyourjourney():
             session['username'] = username  # Store user in session
             return redirect(url_for('dashboard'))  # Redirect to the dashboard page
         else:
-            return 'Invalid credentials.'
+            return 'Invalid credentials. <a href="/startyourjourney">Try again</a>'
 
     db = get_db()
     cur = db.cursor()
