@@ -14,37 +14,39 @@
 
     <!-- DataTable Container -->
     <div class="container mt-4">
-        <table id="projectIdeasTable" class="table table-striped table-bordered" style="width:100%">
-            <thead>
-                <tr>
-                    <th>Date Posted</th>
-                    <th>Job Title</th>
-                    <th>Job Category</th>
-                    <th>Work Setup</th>
-                    <th>Company Name</th>
-                    <th>Location</th>
-                    <th>Salary Range</th>
-                    <th>Job Post Link</th>
-                    <th>Application Deadline</th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for datajob in datajobs %}
-                <tr>
-                    <td> {{ datajob.datePosted }} </td>
-                    <td> {{ datajob.jobTitle }} </td>
-                    <td> {{ datajob.jobCategory }} </td>
-                    <td> {{ datajob.workSetup }} </td>
-                    <td> {{ datajob.companyName }} </td>
-                    <td> {{ datajob.location }} </td>   
-                    <td> {{ datajob.salaryRange }} </td>
-                    <td> {{ datajob.jobPostLink }} </td>
-                    <td> {{ datajob.applicationDeadline }}</td>                 
-                </tr>
-                {% endfor %}
-                <!-- Add more rows as needed -->
-            </tbody>
-        </table>
+        <div class="table-responsive"> <!-- Add this div to make the table responsive -->
+            <table id="projectIdeasTable" class="table table-striped table-bordered" style="width:100%">
+                <thead>
+                    <tr>
+                        <th>Date Posted</th>
+                        <th>Job Title</th>
+                        <th>Job Category</th>
+                        <th>Work Setup</th>
+                        <th>Company Name</th>
+                        <th>Location</th>
+                        <th>Salary Range</th>
+                        <th>Job Post Link</th>
+                        <th>Application Deadline</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for datajob in datajobs %}
+                    <tr>
+                        <td> {{ datajob.datePosted }} </td>
+                        <td> {{ datajob.jobTitle }} </td>
+                        <td> {{ datajob.jobCategory }} </td>
+                        <td> {{ datajob.workSetup }} </td>
+                        <td> {{ datajob.companyName }} </td>
+                        <td> {{ datajob.location }} </td>   
+                        <td> {{ datajob.salaryRange }} </td>
+                        <td> <a href="{{ datajob.jobPostLink }}" target="_blank">Link</a> </td>
+                        <td> {{ datajob.applicationDeadline }}</td>                 
+                    </tr>
+                    {% endfor %}
+                    <!-- Add more rows as needed -->
+                </tbody>
+            </table>
+        </div>
     </div>
 
     <!-- Modal -->
