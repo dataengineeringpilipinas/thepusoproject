@@ -336,6 +336,10 @@ def aboutdep():
 def contact():
     return render_template('contact.html')
 
+@app.route('/developers')
+def developers():
+    return render_template('developers.html')
+
 if __name__ == '__main__':
     #init_db()
     app.run(debug=True)

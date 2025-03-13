@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+
+{% block title %}Developers - The Puso Project{% endblock %}
+
+{% block content %}
+    <!-- Developers Grid -->
+    <div id="developers" class="container mt-5">
+        <h2 class="text-center mb-4">Our Volunteer Developers</h2>
+        <div class="row">
+            <!-- Developer 1 -->
+            <div class="col-md-4 mb-4">
+                <div class="card">
+                    <img src="{{ url_for('static', filename='TPP-Billy.png') }}" class="card-img-top" alt="Mentor 1">
+                    <div class="card-body">
+                        <h5 class="card-title">Billymer Salamat</h5>
+                        <p class="card-text">Volunteer Web Developer</p>
+                        <p class="card-text">
+                            <a href="https://github.com/floodro" target="_blank">
+                                <i class="fab fa-github fa-2x"></i>
+                            </a>
+                            <a href="https://www.linkedin.com/in/billysalamat/" target="_blank" class="me-1">
+                                <i class="fab fa-linkedin fa-2x"></i>
+                            </a>
+                        </p>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Add more developers as needed -->
+        </div>
+    </div>
+{% endblock %}
