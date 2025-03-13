@@ -1,5 +1,6 @@
 # Utility Programs
 dbCreate.py
+*.sqbpro
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
