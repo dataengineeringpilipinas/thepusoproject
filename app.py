@@ -58,6 +58,7 @@ def logout():
 
 @app.route('/datajobs/', methods=['GET'])
 def datajobs():
+    #db = get_db('/home/engramar/thepusoproject/datajobs.db')  # Use datajobs.db
     db = get_db('./datajobs.db')  # Use datajobs.db
     cur = db.cursor()
 
@@ -106,6 +107,7 @@ def post_job():
     applicationDeadline = request.form['applicationDeadline']
 
     # Execute SQL query to insert form data into SQLite database
+    #db = get_db('/home/engramar/thepusoproject/datajobs.db')  # Use datajobs.db
     db = get_db('./datajobs.db')  # Use datajobs.db
     cur = db.cursor()
     cur.execute(
