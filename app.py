@@ -77,8 +77,23 @@ def datajobs():
 
     return render_template('datajobs.html', datajobs=datajobs)
 
-@app.route('/post_job/', methods=['POST'])
+@app.route('/post_job', methods=['POST'])
 def post_job():
+    print("Job post request received")  # Debug
+
+    # Extract form data
+    datePosted = request.form.get('datePosted')
+    jobTitle = request.form.get('jobTitle')
+    jobCategory = request.form.get('jobCategory')
+    workSetup = request.form.get('workSetup')
+    companyName = request.form.get('companyName')
+    location = request.form.get('location')
+    salaryRange = request.form.get('salaryRange')
+    jobPostLink = request.form.get('jobPostLink')
+    applicationDeadline = request.form.get('applicationDeadline')
+
+    print(f"Received data: {datePosted}, {jobTitle}, {jobCategory}, {workSetup}, {companyName}, {location}, {salaryRange}, {jobPostLink}, {applicationDeadline}")  # Debug
+    
     # Get data from html form id = JobPostForm
     datePosted = request.form['datePosted']
     jobTitle = request.form['jobTitle']
