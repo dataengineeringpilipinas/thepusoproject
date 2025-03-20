@@ -1,13 +1,16 @@
-# The Puso Project 
+# The Puso Project (TPP)
+##https://www.thepusoproject.ph/
 #### An initiative by [Data Engineering Pilipinas](https://dataengineering.ph/)
-##### Checkout the forever work-in-progress here: [Link to project](https://www.thepusoproject.ph/)
 
-## Pre-requisite
+## Pre-requisites
+To join, you just need the enough basic knowledge of Python, Flask and GitHub PR Merge process.
 ##### [Step 1 | Python for Everybody](https://citizendev.code.sydney/)
 ##### [Step 2 | Intro to Flask](https://prettyprinted.com/introflask/)
+##### [Step 3 | Basic GitHub PR Merge Knowledge](https://github.com/dataengineeringpilipinas/thepusoproject/wiki/CitizenDev-%7C-TPP-GitHub-PR-Merge-Flow)
 
-
-## How to contribute
-##### You can check out the links below to show how to get started. It was prepared by a former (honorary) mentor of Code.Sydney, Paolo Garde.  
-##### [Link to Video](https://www.youtube.com/watch?v=p3mOh14UjXQ)
-##### [Link to the Article](https://code-sydney-playbook.vercel.app/docs/pull-request)
+## TPP Squads
+| Squad Name | Members  | Epic  |
+| :------------ | :------------ | :------------ |
+|TPP Suqad 1  |  @floodro @chinagonzales @caryll-labay | Data Jobs   |
+|TPP Suqad 2  |  @reyesdf @zyndly @alwe009 | DEP Talents |
+|TPP Suqad 3  |   @FranceKR @KevsterAmp @iamjmr | Mentors Portal |
