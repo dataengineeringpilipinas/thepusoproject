@@ -7,6 +7,7 @@ To join, you just need the enough basic knowledge of Python, Flask and GitHub PR
 ##### [Step 1 | Python for Everybody](https://citizendev.code.sydney/)
 ##### [Step 2 | Intro to Flask](https://prettyprinted.com/introflask/)
 ##### [Step 3 | Basic GitHub PR Merge Knowledge](https://github.com/dataengineeringpilipinas/thepusoproject/wiki/CitizenDev-%7C-TPP-GitHub-PR-Merge-Flow)
+##### [Step 4 | Join DEP Discord to collaborate](https://discord.com/invite/buDgydz7J9)
 
 ## TPP Squads
 | Squad Name | Members  | Epic  |
