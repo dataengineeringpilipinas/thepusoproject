@@ -17,6 +17,16 @@
 
     <!-- DataTable Container -->
     <div class="container mt-4">
+            <div class="dataTables_wrapper dt-bootstrap5 no-footer">
+                <div class="row">
+                    <div class="col-sm-12 col-md-6">
+                        <div id="fixedLength"></div>
+                    </div>
+                    <div class="col-sm-12 col-md-6">
+                        <div id="fixedFilter"></div>
+                    </div>
+                </div>
+            </div>
         <div class="table-responsive"> <!-- Add this div to make the table responsive -->
             <table id="projectIdeasTable" class="table table-striped table-bordered" style="width:100%">
                 <thead>
@@ -52,59 +62,72 @@
         </div>
     </div>
 
+    <div class="d-flex justify-content-between flex-wrap mt-2 flex-column flex-lg-row align-items-center text-center">
+        <div id="fixedInfo" class="mb-2 mb-lg-0"></div>
+        <div id="fixedPaginate"></div>
+    </div>
+
     <!-- Modal -->
     <div class="modal fade" id="jobPostModal" tabindex="-1" aria-labelledby="jobPostModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="jobPostModalLabel">Add Job Post</h5>
-                    <button type="button" onclick="" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
                     <form id="jobPostForm" action="/post_job" method="POST">
-                        <div class="mb-3">
-                            <label for="datePosted" class="form-label">Date Posted</label>
-                            <input type="date" class="form-control" id="datePosted" name="datePosted" required>
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label for="datePosted" class="form-label">Date Posted</label>
+                                <input type="date" class="form-control" id="datePosted" name="datePosted" required>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label for="applicationDeadline" class="form-label">Application Deadline</label>
+                                <input type="date" class="form-control" id="applicationDeadline" name="applicationDeadline" required>
+                            </div>
                         </div>
-                        <div class="mb-3">
-                            <label for="jobTitle" class="form-label">Job Title</label>
-                            <input type="text" class="form-control" id="jobTitle" name="jobTitle" required>
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label for="jobTitle" class="form-label">Job Title</label>
+                                <input type="text" class="form-control" id="jobTitle" name="jobTitle" required>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label for="jobCategory" class="form-label">Job Category</label>
+                                <input type="text" class="form-control" id="jobCategory" name="jobCategory" required>
+                            </div>
                         </div>
-                        <div class="mb-3">
-                            <label for="jobCategory" class="form-label">Job Category</label>
-                            <input type="text" class="form-control" id="jobCategory" name="jobCategory" required>
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label for="workSetup" class="form-label">Work Setup</label>
+                                <input type="text" class="form-control" id="workSetup" name="workSetup" required>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label for="companyName" class="form-label">Company Name</label>
+                                <input type="text" class="form-control" id="companyName" name="companyName" required>
+                            </div>
                         </div>
-                        <div class="mb-3">
-                            <label for="workSetup" class="form-label">Work Setup</label>
-                            <input type="text" class="form-control" id="workSetup" name="workSetup" required>
-                        </div>
-                        <div class="mb-3">
-                            <label for="companyName" class="form-label">Company Name</label>
-                            <input type="text" class="form-control" id="companyName" name="companyName" required>
-                        </div>
-                        <div class="mb-3">
-                            <label for="location" class="form-label">Location</label>
-                            <input type="text" class="form-control" id="location" name="location" required>
-                        </div>
-                        <div class="mb-3">
-                            <label for="salaryRange" class="form-label">Salary Range</label>
-                            <input type="text" class="form-control" id="salaryRange" name="salaryRange" required>
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label for="location" class="form-label">Location</label>
+                                <input type="text" class="form-control" id="location" name="location" required>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label for="salaryRange" class="form-label">Salary Range</label>
+                                <input type="text" class="form-control" id="salaryRange" name="salaryRange" required>
+                            </div>
                         </div>
                         <div class="mb-3">
                             <label for="jobPostLink" class="form-label">Job Post Link</label>
                             <input type="url" class="form-control" id="jobPostLink" name="jobPostLink" required>
                         </div>
-                        <div class="mb-3">
-                            <label for="applicationDeadline" class="form-label">Application Deadline</label>
-                            <input type="date" class="form-control" id="applicationDeadline" name="applicationDeadline" required>
-                        </div>
-                        <button type="submit" class="btn btn-primary">Submit</button>
+                        <button type="submit" class="btn btn-primary w-100">Submit</button>
                     </form>
                 </div>
             </div>
         </div>
     </div>
-
+    
     <!-- Include DataTables CSS and JS -->
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.13.6/css/dataTables.bootstrap5.min.css">
     <script type="text/javascript" src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
@@ -121,6 +144,14 @@
                 "info": true, // Show table information
                 "responsive": true // Make the table responsive
             });
+    
+            
+            // Move pagination and info to fixed locations
+            $('#fixedInfo').html($('#projectIdeasTable_info'));
+            $('#fixedPaginate').html($('#projectIdeasTable_paginate'));
+            $('#fixedFilter').html($('#projectIdeasTable_filter'));
+            $('#fixedLength').html($('#projectIdeasTable_length'));
+
         });
     </script>
 {% endblock %}
