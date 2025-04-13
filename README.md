@@ -16,3 +16,5 @@ To join, you just need the enough basic knowledge of Python, Flask and GitHub PR
 |TPP Squad 2  |  @reyesdf @zyndly @alwe009 | DEP Talents |
 |TPP Squad 3  |  @FranceKR @KevsterAmp @iamjmr | Mentors Portal |
 |TPP Squad 4  |  @harkDHerald @johnrich28-svg | Admin Panel |
+
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
