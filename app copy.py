@@ -170,7 +170,7 @@ def startyourjourney():
     fig, ax = plt.subplots(figsize=(12, 6))
 
     # Add a title to the graph with total enrollments
-    ax.set_title(f"Total Enrollments: {total_enrollments:,}", fontsize=14, pad=20)
+    ax.set_title(f"Total Enrollments: {total_enrollments}", fontsize=14, pad=20)
 
     bars = ax.bar(py4e_done_counts.keys(), py4e_done_counts.values(), color='#B6D0E2')
 
