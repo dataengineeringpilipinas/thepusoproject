@@ -16,7 +16,7 @@ To join, you just need the enough basic knowledge of Python, Flask and GitHub PR
 |TPP Squad 2  |  @reyesdf @zyndly @alwe009 | DEP Talents |
 |TPP Squad 3  |  @FranceKR @KevsterAmp @iamjmr | Mentors Portal |
 |TPP Squad 4  |  @harkDHerald @johnrich28-svg @pyjom | Puso Projects |
-|TPP Squad 5  |  @YaHa @johnmikx | TBA |
+|TPP Squad 5  |  @YaHa @johnmikx @deangarcia-loverboy | TBA |
 
 ⚠️ Important: This application is released under [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT).
 If you choose to use or reuse this app, you are solely responsible for ensuring that your implementation complies with applicable privacy laws and data protection regulations.
