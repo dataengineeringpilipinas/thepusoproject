@@ -188,6 +188,7 @@ def startyourjourney():
     plt.tight_layout()
 
     # Save the plot
+    #img_path = os.path.join('/home/engramar/thepusoproject/static', 'py4e_progress.png')        
     img_path = os.path.join('static', 'py4e_progress.png')
     plt.savefig(img_path)
     plt.close()
