@@ -3,147 +3,32 @@
 {% block title %}DEP Talents - The Puso Project{% endblock %}
 
 {% block content %}
-    <div class="text-center">
-        <h1>DEP Talents</h1>
-    </div>
+<div class="container mt-5">
+    <h1 class="text-center mb-4">DEP Certified</h1>
+    <div class="row justify-content-center">
 
-    <!-- DataTable Container -->
-    <div class="container mt-4">
-        <table id="projectIdeasTable" class="table table-striped table-bordered" style="width:100%">
-            <thead>
-                <tr>
-                    <th>Name</th>
-                    <th>DEP Score</th>
-                    <th>Accomplishments</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td><a href="https://www.linkedin.com/in/junmiano1202/" target="_blank">Jun Miano</a></td>
-                    <td>50 reputation points</td>
-                    <td>DEP-101, DEP-102, DEP-104, DEP-202</td>
-                </tr>
-                <tr>
-                    <td>Noel Adante</td>
-                    <td>30 reputation points</td>
-                    <td>DEP-101, DEP-102, DEP-104</td>
-                </tr>  
-                <tr>
-                    <td><a href="https://www.linkedin.com/in/billysalamat/" target="_blank">Billymer Salamat</a>                 </td>
-                    <td>20 reputation points</td>
-                    <td>DEP-105</td>
-                </tr>  
-                <tr>
-                    <td>Ronald August Pino</td>
-                    <td>20 reputation points</td>
-                    <td>DEP-101, DEP-103</td>
-                </tr>                  
-                <tr>
-                    <td>John Ryan Rodriguez</td>
-                    <td>20 reputation points</td>
-                    <td>DEP-101, DEP-102</td>
-                </tr>  
-                <tr>
-                    <td>John Harry M. Duavis</td>
-                    <td>20 reputation points</td>
-                    <td>DEP-101, DEP-102</td>
-                </tr>  
-                <tr>
-                    <td>Jhamil Gutierrez</td>
-                    <td>20 reputation points</td>
-                    <td>DEP-101, DEP-102</td>
-                </tr>                                                          
-                <!-- Add more rows as needed -->
-            </tbody>
-        </table>
-    </div>
-    <br/>
-    <div class="container mt-4">
-        <div class="text-center">
-            <h2>DEP Scoring Mechanics</h2>
+        <!-- Jun Miano -->
+        <div class="col-md-5 mb-4">
+            <div class="card shadow">
+                <img src="{{ url_for('static', filename='certificates/jun_miano_cert.png') }}" class="card-img-top" alt="Jun Miano Certificate">
+                <div class="card-body text-center">
+                    <a href="https://au.badgr.com/issuers/5f1d27525293a275faa3d7a4/badges/651d20a6f87d12504fa4b925/assertions/67842f934d86fa7e1ae3de3b"
+                       class="btn btn-primary" target="_blank">View Badge</a>
+                </div>
+            </div>
         </div>
-        <table id="projectIdeasTable" class="table table-striped table-bordered" style="width:100%">
-            <thead>
-                <tr>
-                    <th>ID</th>
-                    <th>Activity</th>
-                    <th>Level</th>                    
-                    <th>DEP Score</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td>DEP-101</td>
-                    <td>Python for Everybody (PY4E) Completion</td>
-                    <td>Beginner</td>
-                    <td>10 reputation points</td>
-                </tr>
-                <tr>
-                    <td>DEP-102</td>                    
-                    <td>Python for Everybody (PY4E) 1-1 Course Feedback</td>
-                    <td>Beginner</td>
-                    <td>10 reputation points</td>
-                </tr>
-                <tr>
-                    <td>DEP-103</td>                    
-                    <td>Introduction to Flask</td>
-                    <td>Beginner</td>
-                    <td>10 reputation points</td>
-                </tr>
-                <tr>
-                    <td>DEP-104</td>                    
-                    <td>Data Hub Contribution</td>
-                    <td>Beginner</td>
-                    <td>10 reputation points</td>
-                </tr>
-                <tr>
-                    <td>DEP-105</td>                    
-                    <td>TPP Web Development Contribution</td>
-                    <td>Beginner</td>
-                    <td>20 reputation points</td>
-                </tr>   
-                <tr>
-                    <td>DEP-201</td>                    
-                    <td>Data Masters Presentation</td>
-                    <td>Intermediate</td>
-                    <td>20 reputation points</td>
-                </tr>
-                <tr>
-                    <td>DEP-202</td>                    
-                    <td>Volunteer Mentorship</td>
-                    <td>Intermediate</td>
-                    <td>20 reputation points</td>
-                </tr>
-             </tbody>
-        </table>
+
+        <!-- Noel Adante -->
+        <div class="col-md-5 mb-4">
+            <div class="card shadow">
+                <img src="{{ url_for('static', filename='certificates/noel_adante_cert.png') }}" class="card-img-top" alt="Jun Miano Certificate">
+                <div class="card-body text-center">
+                    <a href="https://au.badgr.com/issuers/5f1d27525293a275faa3d7a4/badges/651d20a6f87d12504fa4b925/assertions/678431a74d86fa7e1ae3de46"
+                       class="btn btn-primary" target="_blank">View Badge</a>
+                </div>
+            </div>
+        </div>
+
     </div>
-    <br/>
-
-    <!-- Include DataTables CSS and JS -->
-    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.13.6/css/dataTables.bootstrap5.min.css">
-    <script type="text/javascript" src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
-    <script type="text/javascript" src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
-    <script type="text/javascript" src="https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap5.min.js"></script>
-
-    <!-- Initialize DataTable -->
-    <script>
-        $(document).ready(function() {
-            // Custom sorting function for reputation points
-            $.fn.dataTable.ext.type.order['num-reputation-pre'] = function(data) {
-                return parseInt(data.replace(/\D/g, ''), 10) || 0; // Extract numeric value
-            };
-    
-            $('#projectIdeasTable').DataTable({
-                "paging": true, 
-                "searching": true,
-                "ordering": true,
-                "info": true,
-                "responsive": true,
-                "order": [[1, "desc"]], // Sorts DEP Score (2nd column) in descending order by default
-                "columnDefs": [
-                    { "type": "num-reputation", "targets": 1 } // Apply custom sorting to DEP Score column
-                ]
-            });
-        });
-    </script>
+</div>
 {% endblock %}
