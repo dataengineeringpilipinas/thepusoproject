@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+
+{% block title %}Data Deep Dive - The Puso Project{% endblock %}
+
+{% block content %}
+    <div class="text-center">
+        <h1>Data Deep Dive</h1>
+        <p class="mt-2">
+            Data Deep Dive is an initiative to explore open datasets from <a href="https://data.gov.ph" target="_blank">data.gov.ph</a> one step at a time. Our goal is to encourage data curiosity and practical insight generation.
+        </p>
+        <ol class="text-start mx-auto" style="max-width: 600px;">
+            <li>Work on the published data in <a href="{{ url_for('datajobs') }}" target="_blank">Data Jobs</a>.</li>
+            <li>Perform data cleaning and wrangling.</li>
+            <li>Conduct exploratory data analysis.</li>
+            <li>Create visualizations to highlight key insights.</li>
+            <li>Write a short summary of your findings and recommendations.</li>
+            <li>Submit your work to the <a href="https://github.com/dataengineeringpilipinas/datahub/blob/main/docs/CONTRIBUTING.md" target="_blank">DEP DataHub</a>.</li>
+        </ol>
+        <p class="mt-3">
+            Each month, we’ll go through all submissions and pick one outstanding entry as our monthly winner. The winner will be published in <a href="{{ url_for('deptalents') }}" target="_blank">DEP Certified</a> page.
+        </p>        
+    </div>
+{% endblock %}
