@@ -12,7 +12,7 @@ To join, you just need the enough basic knowledge of Python, Flask and GitHub PR
 ## TPP Squads
 | Squad Name | Members  | Epic  |
 | :------------ | :------------ | :------------ |
-|TPP Squad 1  |  @floodro @chinagonzales @caryll-labay | Data Jobs   |
+|TPP Squad 1  |  @floodro(billy) @chinagonzales(china) @caryll-labay(cali) | Data Jobs   |
 |TPP Squad 2  |  @reyesdf @zyndly @alwe009 | DEP Talents |
 |TPP Squad 3  |  @FranceKR @KevsterAmp @iamjmr | Mentors Portal |
 |TPP Squad 4  |  @harkDHerald @johnrich28-svg @pyjom | Data Deep Dive |
