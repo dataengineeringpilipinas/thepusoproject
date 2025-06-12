@@ -326,9 +326,9 @@ def update(username):
 def deptalents():
     return render_template('deptalents.html')
 
-@app.route('/pusoprojects')
-def pusoprojects():
-    return render_template('pusoprojects.html')
+@app.route('/datadeepdive')
+def datadeepdive():
+    return render_template('datadeepdive.html')
 
 @app.route('/datamasters')
 def datamasters():
