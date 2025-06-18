@@ -330,6 +330,7 @@ def deptalents():
 def datadeepdive():
     return render_template('datadeepdive.html')
 
+
 @app.route('/datamasters')
 def datamasters():
     return render_template('datamasters.html')
@@ -353,6 +354,10 @@ def aboutdep():
 @app.route('/contact')
 def contact():
     return render_template('contact.html')
+
+@app.route('/solutions')
+def solutions():
+    return render_template('solutions.html')
 
 @app.route('/developers')
 def developers():
