@@ -1,0 +1,128 @@
+{% extends "base.html" %}
+
+{% block title %}Data Deep Dive - The Puso Project{% endblock %}
+
+{% block content %}
+    <div class="text-center">
+        <h1>Solutions</h1>
+    </div>
+
+    <!-- Card Grid -->
+    <div class="container py-4">
+        <div class="row g-4">
+    
+        <!-- Card -->
+        <div class="col-sm-6 col-md-4">
+            <a href="https://depticketing.pythonanywhere.com/" target="_blank" class="text-decoration-none">
+            <div class="card border-0 shadow-sm h-100">
+                                <!-- Card Body with Content -->
+                <div class="card-body d-flex flex-column">
+                    <!-- Contributor Info and Social Media Icons -->
+                    <div class="d-flex justify-content-between align-items-center mb-3">
+                        <div>
+                            <small class="text-muted d-block">Contributor</small>
+                            <strong class="text-dark small">Engramar Bollas</strong>
+                        </div>
+                        <div class="d-flex gap-2">
+                            <a href="https://github.com/engramar" target="_blank" class="text-decoration-none">
+                                <i class="fab fa-github text-dark"></i>
+                            </a>
+                            <a href="https://www.linkedin.com/in/engramarbollas" target="_blank" class="text-decoration-none">
+                                <i class="fab fa-linkedin text-primary"></i>
+                            </a>
+                        </div>
+                    </div>
+                    
+                    <!-- Title -->
+                    <h5 class="card-title text-dark mb-2">Barangay Ticketing System</h5>
+                    
+                    <!-- Description -->
+                    <p class="card-text text-muted mb-3">
+                        A comprehensive digital ticketing system for barangay operations, streamlining citation management and improving community service efficiency.
+                    </p>
+                    <!-- Description -->
+                    <p class="card-text text-muted mb-3">
+                        <a href="https://github.com/dataengineeringpilipinas/dep-ticketing" target="_blank" class="text-decoration-none">
+                            <small class="text-muted">Source Code</small>
+                        </a>
+                    </p>
+                </div>
+
+                <!-- Image -->
+                <img src="{{ url_for('static', filename='feature_depticketing2.png') }}" class="card-img-top" alt="Barangay Ticketing Preview">
+                
+            
+            </div>
+            </a>
+        </div>
+
+        <!-- Card -->
+        <div class="col-sm-6 col-md-4">
+            <a href="https://deptracker.pythonanywhere.com/" target="_blank" class="text-decoration-none">
+            <div class="card border-0 shadow-sm h-100">
+                
+                <!-- Card Body with Content -->
+                <div class="card-body d-flex flex-column">
+                    <!-- Contributor Info and Social Media Icons -->
+                    <div class="d-flex justify-content-between align-items-center mb-3">
+                        <div>
+                            <small class="text-muted d-block">Contributor</small>
+                            <strong class="text-dark small">Engramar Bollas</strong>
+                        </div>
+                        <div class="d-flex gap-2">
+                            <a href="https://github.com/engramar" target="_blank" class="text-decoration-none">
+                                <i class="fab fa-github text-dark"></i>
+                            </a>
+                            <a href="https://www.linkedin.com/in/engramarbollas" target="_blank" class="text-decoration-none">
+                                <i class="fab fa-linkedin text-primary"></i>
+                            </a>
+                        </div>
+                    </div>
+                    
+                    <!-- Title -->
+                    <h5 class="card-title text-dark mb-2">Barangay Tanod Tracker</h5>
+                    
+                    <!-- Description -->
+                    <p class="card-text text-muted mb-3">
+                        Real-time tracking and management system for barangay tanod personnel, enhancing security monitoring and patrol coordination.
+                    </p>
+                    <!-- Description -->
+                    <p class="card-text text-muted mb-3">
+                        <a href="https://github.com/dataengineeringpilipinas/dep-tracker" target="_blank" class="text-decoration-none">
+                            <small class="text-muted">Source Code</small>
+                        </a>
+                    </p>                    
+                </div>
+
+                <!-- Image -->
+                <img src="{{ url_for('static', filename='feature_deptracker.png') }}" class="card-img-top" alt="Barangay Tanod Tracker Preview">
+            
+            </div>
+            </a>
+        </div>
+    
+        <!-- Add more cards here -->
+    
+        </div>
+    </div>
+
+    <!-- Include DataTables CSS and JS -->
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.13.6/css/dataTables.bootstrap5.min.css">
+    <script type="text/javascript" src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap5.min.js"></script>
+
+    <!-- Initialize DataTable -->
+    <script>
+        $(document).ready(function() {
+            $('#projectIdeasTable').DataTable({
+                "paging": true, // Enable pagination
+                "searching": true, // Enable search bar
+                "ordering": true, // Enable column sorting
+                "info": true, // Show table information
+                "responsive": true, // Make the table responsive
+                "order": [[5, "asc"]] // Sort by the 6th column (Status) in descending order
+            });
+        });
+    </script>
+{% endblock %}
