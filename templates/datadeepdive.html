@@ -68,6 +68,16 @@
         border-color: #333;
     }
     
+
+    .card-image {
+        width: 100%;
+        height: 300px;
+        object-fit: contain;
+        border-radius: 6px;
+        margin-bottom: 1rem;
+        background-color: #f8f9fa;
+    }
+
     .dataset-title {
         color: #333;
         font-weight: 600;
@@ -201,7 +211,7 @@
             <h1 class="mb-4">Data Deep Dive</h1>
             <p class="mb-4">Unlocking insights, one PH open dataset at a time.</p>
             <div class="search-box">
-                <input type="text" class="search-input" id="searchInput" placeholder="Search open datasets...">
+                <input type="text" class="search-input" id="searchInput" placeholder="Search data analysis projects...">
                 <button class="search-btn" onclick="searchDatasets()">
                     <i class="fas fa-search"></i> Search
                 </button>
@@ -216,24 +226,27 @@
         <div class="row">
             <div class="col-md-3">
                 <div class="stat-item">
-                    <span class="stat-number" id="totalDatasets">{{ datajobs|length if datajobs else 6 }}</span>
+                    <span class="stat-number" id="totalDatasets">6</span>
                     <span class="stat-label">Data Analysis Projects</span>
                 </div>
             </div>
             <div class="col-md-3">
                 <div class="stat-item">
+                    <span class="stat-number">4</span>
                     <span class="stat-number">{{ datajobs|map(attribute='jobCategory')|unique|list|length if datajobs else 1 }}</span>
                     <span class="stat-label">Categories</span>
                 </div>
             </div>
             <div class="col-md-3">
                 <div class="stat-item">
+                    <span class="stat-number">1</span>
                     <span class="stat-number">{{ datajobs|map(attribute='companyName')|unique|list|length if datajobs else 1 }}</span>
                     <span class="stat-label">Organizations</span>
                 </div>
             </div>
             <div class="col-md-3">
                 <div class="stat-item">
+                    <span class="stat-number">1</span>
                     <span class="stat-number">{{ datajobs|map(attribute='location')|unique|list|length if datajobs else 1 }}</span>
                     <span class="stat-label">Locations</span>
                 </div>
@@ -258,6 +271,7 @@
         <!-- DOTr Procurement Monitoring Report -->
         <div class="col-lg-6 col-xl-4 dataset-item" data-category="transportation" data-search="dotr procurement monitoring report transportation">
             <div class="dataset-card">
+                <img src="{{ url_for('static', filename='d3/DOTR-Procurement.png') }}" alt="DOTr Procurement" class="card-image">
                 <h5 class="dataset-title">DOTr- Procurement Monitoring Report (2021)</h5>
                 <p class="dataset-description">Analyze procurement data from the Department of Transportation to identify patterns, efficiency metrics, and transparency indicators.</p>
                 <div class="dataset-meta">
@@ -277,6 +291,7 @@
         <!-- DA Procurement Monitoring Report -->
         <div class="col-lg-6 col-xl-4 dataset-item" data-category="agriculture" data-search="da procurement monitoring report agriculture">
             <div class="dataset-card">
+                <img src="{{ url_for('static', filename='d3/DA-Procurement.png') }}" alt="DA Procurement" class="card-image">
                 <h5 class="dataset-title">DA - Procurement Monitoring Report</h5>
                 <p class="dataset-description">Explore procurement data from the Department of Agriculture to understand spending patterns and project implementation efficiency.</p>
                 <div class="dataset-meta">
@@ -296,6 +311,7 @@
         <!-- Department of Education Masterlist -->
         <div class="col-lg-6 col-xl-4 dataset-item" data-category="transportation" data-search="department of education masterlist schools">
             <div class="dataset-card">
+                <img src="{{ url_for('static', filename='d3/DE-Schools.png') }}" alt="Department of Education Schools" class="card-image">
                 <h5 class="dataset-title">Department of Education - Masterlist of Schools</h5>
                 <p class="dataset-description">Analyze the comprehensive masterlist of schools across the Philippines to identify educational infrastructure patterns and gaps.</p>
                 <div class="dataset-meta">
@@ -315,6 +331,7 @@
         <!-- Commission of Filipino Overseas - Emigrants -->
         <div class="col-lg-6 col-xl-4 dataset-item" data-category="migration" data-search="commission of filipino overseas emigrants statistical profile">
             <div class="dataset-card">
+                <img src="{{ url_for('static', filename='d3/CFO-Emigrants.png') }}" alt="CFO Emigrants" class="card-image">
                 <h5 class="dataset-title">Commission of Filipino Overseas: Statistical Profile Of Registered Filipino Emigrants [1981-2020]</h5>
                 <p class="dataset-description">Analyze migration patterns and demographic trends of Filipino emigrants over four decades to understand diaspora dynamics.</p>
                 <div class="dataset-meta">
@@ -334,6 +351,7 @@
         <!-- DOE Power Generation -->
         <div class="col-lg-6 col-xl-4 dataset-item" data-category="energy" data-search="doe power generation fuel source energy">
             <div class="dataset-card">
+                <img src="{{ url_for('static', filename='d3/DOE-Power.png') }}" alt="DOE Power Generation" class="card-image">
                 <h5 class="dataset-title">DOE Power Generation by Fuel Source, 1990-2020</h5>
                 <p class="dataset-description">Analyze power generation trends by fuel source over three decades to understand energy mix evolution and sustainability patterns.</p>
                 <div class="dataset-meta">
@@ -353,6 +371,7 @@
         <!-- Commission of Filipinos Overseas - Spouses -->
         <div class="col-lg-6 col-xl-4 dataset-item" data-category="migration" data-search="commission of filipinos overseas spouses partners foreign nationals">
             <div class="dataset-card">
+                <img src="{{ url_for('static', filename='d3/CFO-Spouses.png') }}" alt="CFO Spouses" class="card-image">
                 <h5 class="dataset-title">Commission of Filipinos Overseas - Statistical Profile Of Spouses And Other Partners Of Foreign Nationals [1989-2020]</h5>
                 <p class="dataset-description">Analyze demographic patterns and trends of Filipino spouses and partners of foreign nationals over three decades.</p>
                 <div class="dataset-meta">
@@ -373,17 +392,18 @@
     <!-- About Section -->
     <div class="about-section">
         <h4>About Data Deep Dive</h4>
-        <p>Data Deep Dive showcases data analysis projects from the <a href="https://github.com/dataengineeringpilipinas/datahub" target="_blank">DEP DataHub</a>. These projects focus on analyzing Philippine government data to generate insights and promote data-driven decision making.</p>
-        <h5>How to participate:</h5>
+        <p>D3 is an initiative to explore open datasets from <a href="https://data.gov.ph/" target="_blank">data.gov.ph</a> one step at a time. Our goal is to encourage data curiosity and practical insight generation.</p>
+        <p>Work on the published data in <a href="https://www.thepusoproject.ph/datajobs/" target="_blank">Data Jobs</a></p>
         <ol>
-            <li>Browse through the available data analysis projects using the search and filter functions.</li>
-            <li>Click on "View Project Details" to see the full project requirements and dataset information.</li>
-            <li>Download the dataset and perform your analysis following the project guidelines.</li>
-            <li>Submit your findings and visualizations to the corresponding GitHub issue.</li>
-            <li>Contribute to the growth of the Philippine data community!</li>
+            <li>Perform data cleaning and wrangling.</li>
+            <li>Conduct exploratory data analysis.</li>
+            <li>Create visualizations to highlight key insights.</li>
+            <li>Write a short summary of your findings and recommendations.</li>
+            <li>Submit your work to the <a href="https://github.com/dataengineeringpilipinas/datahub/blob/main/docs/CONTRIBUTING.md" target="_blank">DEP DataHub</a></li>
+            <li>Each month, we'll go through all submissions and pick one outstanding entry as our monthly winner. The winner will be published in <a href="https://www.thepusoproject.ph/deptalents" target="_blank">DEP Talents</a> page.</li>
         </ol>
         <p class="mt-3">
-            For more detailed project listings and to submit new data analysis opportunities, visit our <a href="{{ url_for('datajobs') }}" target="_blank">Data Jobs</a> page.
+            For more detailed project listings, visit our <a href="{{ url_for('datajobs') }}" target="_blank">Data Jobs</a> page.
         </p>
     </div>
 </div>
