@@ -328,7 +328,20 @@ def deptalents():
 
 @app.route('/datadeepdive')
 def datadeepdive():
-    return render_template('datadeepdive.html')
+    # Fetch data from datajobs database
+    db = get_db('./datajobs.db')
+    cur = db.cursor()
+    
+    # Create the datajobs table if it doesn't exist
+    cur.execute(
+        "CREATE TABLE IF NOT EXISTS datajobs (id INTEGER PRIMARY KEY, datePosted TEXT, jobTitle TEXT, jobCategory TEXT, workSetup TEXT, companyName TEXT, location TEXT, salaryRange TEXT, jobPostLink TEXT, applicationDeadline TEXT)",
+    )
+    
+    cur.execute("SELECT * FROM datajobs")
+    datajobs = cur.fetchall()
+    cur.close()
+    
+    return render_template('datadeepdive.html', datajobs=datajobs)
 
 
 @app.route('/datamasters')
