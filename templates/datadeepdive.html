@@ -3,21 +3,458 @@
 {% block title %}Data Deep Dive - The Puso Project{% endblock %}
 
 {% block content %}
-    <div class="text-center">
-        <h1>Data Deep Dive</h1>
-        <p class="mt-2">
-            Data Deep Dive is an initiative to explore open datasets from <a href="https://data.gov.ph" target="_blank">data.gov.ph</a> one step at a time. Our goal is to encourage data curiosity and practical insight generation.
-        </p>
-        <ol class="text-start mx-auto" style="max-width: 600px;">
-            <li>Work on the published data in <a href="{{ url_for('datajobs') }}" target="_blank">Data Jobs</a>.</li>
+<style>
+    .search-section {
+        background: #f8f9fa;
+        color: #333;
+        padding: 3rem 0;
+        margin-bottom: 2rem;
+        border-bottom: 1px solid #e9ecef;
+    }
+    
+    .search-container {
+        max-width: 800px;
+        margin: 0 auto;
+    }
+    
+    .search-box {
+        background: white;
+        border: 2px solid #e9ecef;
+        border-radius: 8px;
+        padding: 0.5rem;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+        display: flex;
+        align-items: center;
+    }
+    
+    .search-input {
+        border: none;
+        outline: none;
+        flex: 1;
+        padding: 1rem 1.5rem;
+        font-size: 1.1rem;
+        border-radius: 6px;
+        color: #333;
+    }
+    
+    .search-btn {
+        background: #333;
+        color: white;
+        border: none;
+        padding: 1rem 2rem;
+        border-radius: 6px;
+        font-weight: 500;
+        transition: all 0.3s ease;
+    }
+    
+    .search-btn:hover {
+        background: #555;
+        transform: translateY(-1px);
+    }
+    
+    .dataset-card {
+        border: 1px solid #e9ecef;
+        border-radius: 8px;
+        padding: 1.5rem;
+        margin-bottom: 1.5rem;
+        transition: all 0.3s ease;
+        background: white;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+    }
+    
+    .dataset-card:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 16px rgba(0,0,0,0.1);
+        border-color: #333;
+    }
+    
+    .card-image {
+        width: 100%;
+        height: 300px;
+        object-fit: contain;
+        border-radius: 6px;
+        margin-bottom: 1rem;
+        background-color: #f8f9fa;
+    }
+    
+    .dataset-title {
+        color: #333;
+        font-weight: 600;
+        margin-bottom: 0.5rem;
+        font-size: 1.2rem;
+    }
+    
+    .dataset-description {
+        color: #666;
+        margin-bottom: 1rem;
+        line-height: 1.6;
+    }
+    
+    .dataset-meta {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        font-size: 0.9rem;
+        color: #666;
+    }
+    
+    .dataset-tags {
+        display: flex;
+        gap: 0.5rem;
+        flex-wrap: wrap;
+        margin-top: 1rem;
+    }
+    
+    .tag {
+        background: #f8f9fa;
+        color: #333;
+        padding: 0.25rem 0.75rem;
+        border-radius: 4px;
+        font-size: 0.8rem;
+        font-weight: 500;
+        border: 1px solid #e9ecef;
+    }
+    
+    .tag.health { background: #f8f9fa; color: #333; border-color: #28a745; }
+    .tag.economy { background: #f8f9fa; color: #333; border-color: #ffc107; }
+    .tag.education { background: #f8f9fa; color: #333; border-color: #007bff; }
+    .tag.transport { background: #f8f9fa; color: #333; border-color: #dc3545; }
+    .tag.environment { background: #f8f9fa; color: #333; border-color: #17a2b8; }
+    .tag.transportation { background: #f8f9fa; color: #333; border-color: #dc3545; }
+    .tag.agriculture { background: #f8f9fa; color: #333; border-color: #28a745; }
+    .tag.migration { background: #f8f9fa; color: #333; border-color: #17a2b8; }
+    .tag.energy { background: #f8f9fa; color: #333; border-color: #ffc107; }
+    
+    .stats-section {
+        background: white;
+        padding: 2rem 0;
+        margin-bottom: 2rem;
+        border-bottom: 1px solid #e9ecef;
+    }
+    
+    .stat-item {
+        text-align: center;
+        padding: 1rem;
+    }
+    
+    .stat-number {
+        font-size: 2.5rem;
+        font-weight: 700;
+        color: #333;
+        display: block;
+    }
+    
+    .stat-label {
+        color: #666;
+        font-size: 0.9rem;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+    }
+    
+    .filter-section {
+        margin-bottom: 2rem;
+    }
+    
+    .filter-btn {
+        background: white;
+        border: 2px solid #e9ecef;
+        color: #333;
+        padding: 0.5rem 1.5rem;
+        border-radius: 6px;
+        margin: 0.25rem;
+        transition: all 0.3s ease;
+        font-weight: 500;
+    }
+    
+    .filter-btn:hover, .filter-btn.active {
+        background: #333;
+        border-color: #333;
+        color: white;
+    }
+    
+    .hidden {
+        display: none;
+    }
+    
+    .about-section {
+        background: #f8f9fa;
+        border-radius: 8px;
+        padding: 2rem;
+        margin-top: 3rem;
+    }
+    
+    .about-section h4 {
+        color: #333;
+        margin-bottom: 1rem;
+    }
+    
+    .about-section p, .about-section li {
+        color: #666;
+        line-height: 1.6;
+    }
+    
+    .about-section a {
+        color: #333;
+        text-decoration: underline;
+    }
+    
+    .about-section a:hover {
+        color: #555;
+    }
+</style>
+
+<!-- Search Section -->
+<div class="search-section">
+    <div class="container">
+        <div class="search-container text-center">
+            <h1 class="mb-4">Data Deep Dive</h1>
+            <p class="mb-4">Unlocking insights, one PH open dataset at a time.</p>
+            <div class="search-box">
+                <input type="text" class="search-input" id="searchInput" placeholder="Search data analysis projects...">
+                <button class="search-btn" onclick="searchDatasets()">
+                    <i class="fas fa-search"></i> Search
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Stats Section 
+<div class="stats-section">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-3">
+                <div class="stat-item">
+                    <span class="stat-number" id="totalDatasets">6</span>
+                    <span class="stat-label">Data Analysis Projects</span>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="stat-item">
+                    <span class="stat-number">4</span>
+                    <span class="stat-label">Categories</span>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="stat-item">
+                    <span class="stat-number">1</span>
+                    <span class="stat-label">Organizations</span>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="stat-item">
+                    <span class="stat-number">1</span>
+                    <span class="stat-label">Locations</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Filter Section -->
+<div class="container">
+    <div class="filter-section text-center">
+        <h5 class="mb-3">Filter by Category</h5>
+        <button class="filter-btn active" onclick="filterDatasets('all')">All</button>
+        <button class="filter-btn" onclick="filterDatasets('transportation')">Transportation</button>
+        <button class="filter-btn" onclick="filterDatasets('agriculture')">Agriculture</button>
+        <button class="filter-btn" onclick="filterDatasets('migration')">Migration</button>
+        <button class="filter-btn" onclick="filterDatasets('energy')">Energy</button>
+    </div>
+
+    <!-- Datasets Grid -->
+    <div class="row" id="datasetsContainer">
+        <!-- DOTr Procurement Monitoring Report -->
+        <div class="col-lg-6 col-xl-4 dataset-item" data-category="transportation" data-search="dotr procurement monitoring report transportation">
+            <div class="dataset-card">
+                <img src="{{ url_for('static', filename='d3/DOTR-Procurement.png') }}" alt="DOTr Procurement" class="card-image">
+                <h5 class="dataset-title">DOTr- Procurement Monitoring Report (2021)</h5>
+                <p class="dataset-description">Analyze procurement data from the Department of Transportation to identify patterns, efficiency metrics, and transparency indicators.</p>
+                <div class="dataset-meta">
+                    <span><i class="fas fa-calendar"></i> Posted: 2025-06-13</span>
+                </div>
+                <div class="dataset-tags">
+                    <span class="tag transportation">Transportation</span>
+                </div>
+                <div class="mt-3">
+                    <a href="https://github.com/dataengineeringpilipinas/datahub/issues/17" target="_blank" class="btn btn-outline-dark btn-sm">
+                        <i class="fas fa-external-link-alt"></i> View Project Details
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <!-- DA Procurement Monitoring Report -->
+        <div class="col-lg-6 col-xl-4 dataset-item" data-category="agriculture" data-search="da procurement monitoring report agriculture">
+            <div class="dataset-card">
+                <img src="{{ url_for('static', filename='d3/DA-Procurement.png') }}" alt="DA Procurement" class="card-image">
+                <h5 class="dataset-title">DA - Procurement Monitoring Report</h5>
+                <p class="dataset-description">Explore procurement data from the Department of Agriculture to understand spending patterns and project implementation efficiency.</p>
+                <div class="dataset-meta">
+                    <span><i class="fas fa-calendar"></i> Posted: 2025-06-20</span>
+                </div>
+                <div class="dataset-tags">
+                    <span class="tag agriculture">Agriculture</span>
+                </div>
+                <div class="mt-3">
+                    <a href="https://github.com/dataengineeringpilipinas/datahub/issues/18" target="_blank" class="btn btn-outline-dark btn-sm">
+                        <i class="fas fa-external-link-alt"></i> View Project Details
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Department of Education Masterlist -->
+        <div class="col-lg-6 col-xl-4 dataset-item" data-category="transportation" data-search="department of education masterlist schools">
+            <div class="dataset-card">
+                <img src="{{ url_for('static', filename='d3/DE-Schools.png') }}" alt="Department of Education Schools" class="card-image">
+                <h5 class="dataset-title">Department of Education - Masterlist of Schools</h5>
+                <p class="dataset-description">Analyze the comprehensive masterlist of schools across the Philippines to identify educational infrastructure patterns and gaps.</p>
+                <div class="dataset-meta">
+                    <span><i class="fas fa-calendar"></i> Posted: 2025-06-27</span>
+                </div>
+                <div class="dataset-tags">
+                    <span class="tag transportation">Transportation</span>
+                </div>
+                <div class="mt-3">
+                    <a href="https://github.com/dataengineeringpilipinas/datahub/issues/19" target="_blank" class="btn btn-outline-dark btn-sm">
+                        <i class="fas fa-external-link-alt"></i> View Project Details
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Commission of Filipino Overseas - Emigrants -->
+        <div class="col-lg-6 col-xl-4 dataset-item" data-category="migration" data-search="commission of filipino overseas emigrants statistical profile">
+            <div class="dataset-card">
+                <img src="{{ url_for('static', filename='d3/CFO-Emigrants.png') }}" alt="CFO Emigrants" class="card-image">
+                <h5 class="dataset-title">Commission of Filipino Overseas: Statistical Profile Of Registered Filipino Emigrants [1981-2020]</h5>
+                <p class="dataset-description">Analyze migration patterns and demographic trends of Filipino emigrants over four decades to understand diaspora dynamics.</p>
+                <div class="dataset-meta">
+                    <span><i class="fas fa-calendar"></i> Posted: 2025-07-04</span>
+                </div>
+                <div class="dataset-tags">
+                    <span class="tag migration">Migration</span>
+                </div>
+                <div class="mt-3">
+                    <a href="https://github.com/dataengineeringpilipinas/datahub/issues/20" target="_blank" class="btn btn-outline-dark btn-sm">
+                        <i class="fas fa-external-link-alt"></i> View Project Details
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <!-- DOE Power Generation -->
+        <div class="col-lg-6 col-xl-4 dataset-item" data-category="energy" data-search="doe power generation fuel source energy">
+            <div class="dataset-card">
+                <img src="{{ url_for('static', filename='d3/DOE-Power.png') }}" alt="DOE Power Generation" class="card-image">
+                <h5 class="dataset-title">DOE Power Generation by Fuel Source, 1990-2020</h5>
+                <p class="dataset-description">Analyze power generation trends by fuel source over three decades to understand energy mix evolution and sustainability patterns.</p>
+                <div class="dataset-meta">
+                    <span><i class="fas fa-calendar"></i> Posted: 2025-07-11</span>
+                </div>
+                <div class="dataset-tags">
+                    <span class="tag energy">Energy</span>
+                </div>
+                <div class="mt-3">
+                    <a href="https://github.com/dataengineeringpilipinas/datahub/issues/21" target="_blank" class="btn btn-outline-dark btn-sm">
+                        <i class="fas fa-external-link-alt"></i> View Project Details
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Commission of Filipinos Overseas - Spouses -->
+        <div class="col-lg-6 col-xl-4 dataset-item" data-category="migration" data-search="commission of filipinos overseas spouses partners foreign nationals">
+            <div class="dataset-card">
+                <img src="{{ url_for('static', filename='d3/CFO-Spouses.png') }}" alt="CFO Spouses" class="card-image">
+                <h5 class="dataset-title">Commission of Filipinos Overseas - Statistical Profile Of Spouses And Other Partners Of Foreign Nationals [1989-2020]</h5>
+                <p class="dataset-description">Analyze demographic patterns and trends of Filipino spouses and partners of foreign nationals over three decades.</p>
+                <div class="dataset-meta">
+                    <span><i class="fas fa-calendar"></i> Posted: 2025-07-18</span>
+                </div>
+                <div class="dataset-tags">
+                    <span class="tag migration">Migration</span>
+                </div>
+                <div class="mt-3">
+                    <a href="https://github.com/dataengineeringpilipinas/datahub/issues/22" target="_blank" class="btn btn-outline-dark btn-sm">
+                        <i class="fas fa-external-link-alt"></i> View Project Details
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- About Section -->
+    <div class="about-section">
+        <h4>About Data Deep Dive</h4>
+        <p>D3 is an initiative to explore open datasets from <a href="https://data.gov.ph/" target="_blank">data.gov.ph</a> one step at a time. Our goal is to encourage data curiosity and practical insight generation.</p>
+        <p>Work on the published data in <a href="https://www.thepusoproject.ph/datajobs/" target="_blank">Data Jobs</a></p>
+        <ol>
             <li>Perform data cleaning and wrangling.</li>
             <li>Conduct exploratory data analysis.</li>
             <li>Create visualizations to highlight key insights.</li>
             <li>Write a short summary of your findings and recommendations.</li>
-            <li>Submit your work to the <a href="https://github.com/dataengineeringpilipinas/datahub/blob/main/docs/CONTRIBUTING.md" target="_blank">DEP DataHub</a>.</li>
+            <li>Submit your work to the <a href="https://github.com/dataengineeringpilipinas/datahub/blob/main/docs/CONTRIBUTING.md" target="_blank">DEP DataHub</a></li>
+            <li>Each month, we'll go through all submissions and pick one outstanding entry as our monthly winner. The winner will be published in <a href="https://www.thepusoproject.ph/deptalents" target="_blank">DEP Talents</a> page.</li>
         </ol>
-        <p class="mt-3">
-            Each month, we’ll go through all submissions and pick one outstanding entry as our monthly winner. The winner will be published in <a href="{{ url_for('deptalents') }}" target="_blank">DEP Certified</a> page.
-        </p>        
     </div>
+</div>
+
+<script>
+function searchDatasets() {
+    const searchTerm = document.getElementById('searchInput').value.toLowerCase();
+    const datasets = document.querySelectorAll('.dataset-item');
+    let visibleCount = 0;
+
+    datasets.forEach(dataset => {
+        const searchData = dataset.getAttribute('data-search').toLowerCase();
+        const title = dataset.querySelector('.dataset-title').textContent.toLowerCase();
+        const description = dataset.querySelector('.dataset-description').textContent.toLowerCase();
+        
+        if (searchData.includes(searchTerm) || title.includes(searchTerm) || description.includes(searchTerm)) {
+            dataset.classList.remove('hidden');
+            visibleCount++;
+        } else {
+            dataset.classList.add('hidden');
+        }
+    });
+
+    // Update stats
+    document.getElementById('totalDatasets').textContent = visibleCount;
+}
+
+function filterDatasets(category) {
+    // Update filter buttons
+    document.querySelectorAll('.filter-btn').forEach(btn => btn.classList.remove('active'));
+    event.target.classList.add('active');
+
+    const datasets = document.querySelectorAll('.dataset-item');
+    let visibleCount = 0;
+
+    datasets.forEach(dataset => {
+        const datasetCategory = dataset.getAttribute('data-category');
+        
+        if (category === 'all' || datasetCategory === category) {
+            dataset.classList.remove('hidden');
+            visibleCount++;
+        } else {
+            dataset.classList.add('hidden');
+        }
+    });
+
+    // Update stats
+    document.getElementById('totalDatasets').textContent = visibleCount;
+}
+
+// Search on Enter key press
+document.getElementById('searchInput').addEventListener('keypress', function(e) {
+    if (e.key === 'Enter') {
+        searchDatasets();
+    }
+});
+
+// Real-time search (optional - uncomment if you want instant search)
+// document.getElementById('searchInput').addEventListener('input', searchDatasets);
+</script>
 {% endblock %}
