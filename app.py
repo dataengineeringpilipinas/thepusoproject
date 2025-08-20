@@ -1,14 +1,33 @@
 import sqlite3
 from datetime import datetime
-from flask import Flask, redirect, render_template, request, session, url_for, g
+from flask import Flask, redirect, render_template, request, session, url_for, g, flash
 from flask_bootstrap import Bootstrap
+from werkzeug.security import generate_password_hash, check_password_hash
 import matplotlib.pyplot as plt
 import matplotlib
 matplotlib.use('Agg')
 import os
+import re
+from urllib.parse import urlparse
+import logging
+from logging.handlers import RotatingFileHandler
 
 app = Flask(__name__)
-app.secret_key = 'your_secret_key'
+# Use environment variable for secret key, generate secure random key as fallback
+app.secret_key = os.environ.get('SECRET_KEY', os.urandom(24))
+
+# Configure logging
+if not app.debug:  # Only log to file in production
+    if not os.path.exists('logs'):
+        os.mkdir('logs')
+    file_handler = RotatingFileHandler('logs/pusoproject.log', maxBytes=10240, backupCount=10)
+    file_handler.setFormatter(logging.Formatter(
+        '%(asctime)s %(levelname)s: %(message)s [in %(pathname)s:%(lineno)d]'
+    ))
+    file_handler.setLevel(logging.INFO)
+    app.logger.addHandler(file_handler)
+    app.logger.setLevel(logging.INFO)
+    app.logger.info('Puso Project startup')
 
 # Database configuration
 #DATABASE = '/home/engramar/thepusoproject/citizendevs.db'
@@ -19,17 +38,228 @@ def get_db(db_name=None):
     if db_name is None:
         db_name = DATABASE  # Default to the main database if no name is provided
 
-    if 'db' not in g:
-        g.db = sqlite3.connect(db_name, check_same_thread=False)
-        g.db.row_factory = sqlite3.Row  # Allows access by column name
-    return g.db
+    # Create a unique key for each database connection
+    db_key = f'db_{db_name.replace("./", "").replace(".db", "")}'
+    
+    if not hasattr(g, db_key):
+        # Remove check_same_thread=False - it's unsafe and not needed with proper connection management
+        db = sqlite3.connect(db_name)
+        db.row_factory = sqlite3.Row  # Allows access by column name
+        # Enable foreign key constraints
+        db.execute('PRAGMA foreign_keys = ON')
+        setattr(g, db_key, db)
+    
+    return getattr(g, db_key)
 
 @app.teardown_appcontext
 def close_connection(exception):
-    """Close the database connection at the end of the request."""
-    db = g.pop('db', None)
-    if db is not None:
-        db.close()
+    """Close all database connections at the end of the request."""
+    # Close the main database connection
+    if hasattr(g, 'db_citizendevs'):
+        db = getattr(g, 'db_citizendevs')
+        if db is not None:
+            db.close()
+            delattr(g, 'db_citizendevs')
+    
+    # Close the datajobs database connection
+    if hasattr(g, 'db_datajobs'):
+        db = getattr(g, 'db_datajobs')
+        if db is not None:
+            db.close()
+            delattr(g, 'db_datajobs')
+
+# Input validation functions
+def validate_job_data(form_data):
+    """
+    Validate job posting form data.
+    Returns a list of error messages if validation fails, empty list if valid.
+    """
+    errors = []
+    
+    # Validate required fields
+    required_fields = ['datePosted', 'jobTitle', 'jobCategory', 'companyName', 'location']
+    for field in required_fields:
+        if not form_data.get(field, '').strip():
+            errors.append(f"{field.replace('jobCategory', 'Job Category').replace('companyName', 'Company Name').replace('datePosted', 'Date Posted').replace('jobTitle', 'Job Title').title()} is required")
+    
+    # Validate date format
+    if form_data.get('datePosted'):
+        try:
+            datetime.strptime(form_data['datePosted'], '%Y-%m-%d')
+        except ValueError:
+            errors.append("Date Posted must be in YYYY-MM-DD format")
+    
+    # Validate job title length
+    if form_data.get('jobTitle') and len(form_data['jobTitle']) > 200:
+        errors.append("Job Title must be less than 200 characters")
+    
+    # Validate URL format
+    if form_data.get('jobPostLink'):
+        try:
+            result = urlparse(form_data['jobPostLink'])
+            if not all([result.scheme, result.netloc]) or result.scheme not in ['http', 'https']:
+                errors.append("Job Post Link must be a valid URL starting with http:// or https://")
+        except Exception:
+            errors.append("Job Post Link must be a valid URL")
+    
+    # Validate application deadline if provided
+    if form_data.get('applicationDeadline'):
+        try:
+            deadline = datetime.strptime(form_data['applicationDeadline'], '%Y-%m-%d')
+            posted_date = datetime.strptime(form_data.get('datePosted', ''), '%Y-%m-%d')
+            if deadline < posted_date:
+                errors.append("Application Deadline cannot be before Date Posted")
+        except ValueError:
+            errors.append("Application Deadline must be in YYYY-MM-DD format")
+    
+    return errors
+
+def validate_user_credentials(username, password):
+    """
+    Validate user registration credentials.
+    Returns a list of error messages if validation fails, empty list if valid.
+    """
+    errors = []
+    
+    # Validate username
+    if not username or not username.strip():
+        errors.append("Username is required")
+    elif len(username) < 3:
+        errors.append("Username must be at least 3 characters long")
+    elif len(username) > 50:
+        errors.append("Username must be less than 50 characters")
+    elif not re.match(r'^[a-zA-Z0-9_]+$', username):
+        errors.append("Username can only contain letters, numbers, and underscores")
+    
+    # Validate password
+    if not password or not password.strip():
+        errors.append("Password is required")
+    elif len(password) < 6:
+        errors.append("Password must be at least 6 characters long")
+    elif len(password) > 100:
+        errors.append("Password must be less than 100 characters")
+    
+    return errors
+
+# Utility functions for common operations
+def ensure_user_table_exists():
+    """Ensure the user table exists with proper schema."""
+    db = get_db()
+    cur = db.cursor()
+    cur.execute('''
+        CREATE TABLE IF NOT EXISTS user (
+            username TEXT PRIMARY KEY,
+            password TEXT NOT NULL,
+            Nickname TEXT,
+            PY4E1 TEXT DEFAULT 'To Do',
+            PY4E2 TEXT DEFAULT 'To Do',
+            PY4E3 TEXT DEFAULT 'To Do',
+            PY4E4 TEXT DEFAULT 'To Do',
+            PY4E5 TEXT DEFAULT 'To Do',
+            PY4E6 TEXT DEFAULT 'To Do',
+            PY4E7 TEXT DEFAULT 'To Do',
+            PY4E8 TEXT DEFAULT 'To Do',
+            PY4E9 TEXT DEFAULT 'To Do',
+            PY4E10 TEXT DEFAULT 'To Do',
+            PY4E11 TEXT DEFAULT 'To Do',
+            PY4E12 TEXT DEFAULT 'To Do',
+            PY4E13 TEXT DEFAULT 'To Do',
+            PY4E14 TEXT DEFAULT 'To Do',
+            PY4E15 TEXT DEFAULT 'To Do',
+            PY4E16 TEXT DEFAULT 'To Do',
+            PY4E17 TEXT DEFAULT 'To Do',
+            PY4E18 TEXT DEFAULT 'To Do',
+            last_update TIMESTAMP
+        )
+    ''')
+    db.commit()
+    cur.close()
+
+def ensure_datajobs_table_exists(db):
+    """Ensure the datajobs table exists with proper schema."""
+    cur = db.cursor()
+    cur.execute('''
+        CREATE TABLE IF NOT EXISTS datajobs (
+            id INTEGER PRIMARY KEY,
+            datePosted TEXT,
+            jobTitle TEXT,
+            jobCategory TEXT,
+            workSetup TEXT,
+            companyName TEXT,
+            location TEXT,
+            salaryRange TEXT,
+            jobPostLink TEXT,
+            applicationDeadline TEXT
+        )
+    ''')
+    db.commit()
+    cur.close()
+
+def get_py4e_completion_counts(db):
+    """Get completion counts for all PY4E lessons."""
+    cur = db.cursor()
+    py4e_columns = [f'PY4E{i}' for i in range(1, 19)]
+    allowed_columns = {f'PY4E{i}' for i in range(1, 19)}
+    py4e_done_counts = {}
+    
+    for column in py4e_columns:
+        if column in allowed_columns:
+            cur.execute(f'SELECT COUNT(*) FROM user WHERE {column} = ?', ("Done",))
+            py4e_done_counts[column] = cur.fetchone()[0]
+    
+    cur.close()
+    return py4e_done_counts
+
+def generate_py4e_chart(py4e_counts, total_enrollments, save_path='static/py4e_progress.png'):
+    """Generate and save PY4E progress chart."""
+    try:
+        fig, ax = plt.subplots(figsize=(12, 6))
+        
+        # Add title with total enrollments
+        ax.set_title(f"Total Enrollments: {total_enrollments:,}", fontsize=14, pad=20)
+        
+        # Create bar chart
+        bars = ax.bar(py4e_counts.keys(), py4e_counts.values(), color='#B6D0E2')
+        
+        # Configure chart appearance
+        ax.set_xlabel('PY4E Lessons', fontsize=12)
+        ax.set_ylabel('Number of Completions', fontsize=12)
+        ax.grid(True, alpha=0.3)
+        
+        # Set x-axis labels
+        lesson_labels = [f'PY4E{i}' for i in range(1, 19)]
+        ax.set_xticks(range(len(lesson_labels)))
+        ax.set_xticklabels(lesson_labels, fontsize=10)
+        
+        # Add value labels on bars
+        for i, bar in enumerate(bars):
+            height = bar.get_height()
+            x_position = bar.get_x() + bar.get_width() / 2
+            ax.text(x_position, height + 0.1, str(int(height)), 
+                   ha='center', va='bottom', fontsize=9)
+        
+        # Save chart
+        plt.tight_layout()
+        plt.savefig(save_path, dpi=300, bbox_inches='tight')
+        plt.close()
+        
+        app.logger.debug("Generated chart with %d lesson labels", len(lesson_labels))
+        return save_path
+        
+    except Exception as e:
+        app.logger.error(f"Error generating chart: {str(e)}")
+        return None
+
+# Error handlers
+@app.errorhandler(404)
+def not_found_error(error):
+    app.logger.error(f'404 error: {request.url}')
+    return render_template('404.html'), 404
+
+@app.errorhandler(500)
+def internal_error(error):
+    app.logger.error(f'500 error: {error}')
+    return render_template('500.html'), 500
 
 @app.route('/')
 def index():
@@ -38,16 +268,28 @@ def index():
 @app.route('/signup', methods=['GET', 'POST'])
 def signup():
     if request.method == 'POST':
-        username = request.form['username']
-        password = request.form['password']
+        username = request.form.get('username', '').strip()
+        password = request.form.get('password', '')
+        
+        # Validate user input
+        validation_errors = validate_user_credentials(username, password)
+        if validation_errors:
+            for error in validation_errors:
+                flash(error, 'error')
+            return render_template('signup.html')
+        
+        # Hash the password before storing
+        password_hash = generate_password_hash(password)
         
         db = get_db()
         try:
-            db.execute('INSERT INTO user (username, password) VALUES (?, ?)', (username, password))
+            db.execute('INSERT INTO user (username, password) VALUES (?, ?)', (username, password_hash))
             db.commit()
+            flash('Registration successful! Please log in.', 'success')
             return redirect(url_for('startyourjourney'))
         except sqlite3.IntegrityError:
-            return 'Username already taken. <a href="/signup">Try again</a>'
+            flash('Username already taken. Please choose a different username.', 'error')
+            return render_template('signup.html')
     
     return render_template('signup.html')
     
@@ -80,53 +322,61 @@ def datajobs():
 
 @app.route('/post_job', methods=['POST'])
 def post_job():
-    print("Job post request received")  # Debug
-
-    # Extract form data
-    datePosted = request.form.get('datePosted')
-    jobTitle = request.form.get('jobTitle')
-    jobCategory = request.form.get('jobCategory')
-    workSetup = request.form.get('workSetup')
-    companyName = request.form.get('companyName')
-    location = request.form.get('location')
-    salaryRange = request.form.get('salaryRange')
-    jobPostLink = request.form.get('jobPostLink')
-    applicationDeadline = request.form.get('applicationDeadline')
-
-    print(f"Received data: {datePosted}, {jobTitle}, {jobCategory}, {workSetup}, {companyName}, {location}, {salaryRange}, {jobPostLink}, {applicationDeadline}")  # Debug
+    # Extract and validate form data
+    form_data = {
+        'datePosted': request.form.get('datePosted', '').strip(),
+        'jobTitle': request.form.get('jobTitle', '').strip(),
+        'jobCategory': request.form.get('jobCategory', '').strip(),
+        'workSetup': request.form.get('workSetup', '').strip(),
+        'companyName': request.form.get('companyName', '').strip(),
+        'location': request.form.get('location', '').strip(),
+        'salaryRange': request.form.get('salaryRange', '').strip(),
+        'jobPostLink': request.form.get('jobPostLink', '').strip(),
+        'applicationDeadline': request.form.get('applicationDeadline', '').strip()
+    }
     
-    # Get data from html form id = JobPostForm
-    datePosted = request.form['datePosted']
-    jobTitle = request.form['jobTitle']
-    jobCategory = request.form['jobCategory']
-    workSetup = request.form['workSetup']
-    companyName = request.form['companyName']
-    location = request.form['location']
-    salaryRange = request.form['salaryRange']
-    jobPostLink = request.form['jobPostLink']
-    applicationDeadline = request.form['applicationDeadline']
-
-    # Execute SQL query to insert form data into SQLite database
-    #db = get_db('/home/engramar/thepusoproject/datajobs.db')  # Use datajobs.db
-    db = get_db('./datajobs.db')  # Use datajobs.db
-    cur = db.cursor()
-    cur.execute(
-        "INSERT INTO datajobs (datePosted, jobTitle, jobCategory, workSetup, companyName, location, salaryRange, jobPostLink, applicationDeadline) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)",
-        (datePosted, jobTitle, jobCategory, workSetup, companyName, location, salaryRange, jobPostLink, applicationDeadline)
-    )
-    db.commit()
-    cur.close()
-
+    # Validate job data
+    validation_errors = validate_job_data(form_data)
+    if validation_errors:
+        for error in validation_errors:
+            flash(error, 'error')
+        return redirect(url_for('datajobs'))
+    
+    # Insert job data into database
+    try:
+        db = get_db('./datajobs.db')
+        cur = db.cursor()
+        
+        # Create table if it doesn't exist
+        cur.execute(
+            "CREATE TABLE IF NOT EXISTS datajobs (id INTEGER PRIMARY KEY, datePosted TEXT, jobTitle TEXT, jobCategory TEXT, workSetup TEXT, companyName TEXT, location TEXT, salaryRange TEXT, jobPostLink TEXT, applicationDeadline TEXT)"
+        )
+        
+        # Insert job data
+        cur.execute(
+            "INSERT INTO datajobs (datePosted, jobTitle, jobCategory, workSetup, companyName, location, salaryRange, jobPostLink, applicationDeadline) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)",
+            (form_data['datePosted'], form_data['jobTitle'], form_data['jobCategory'], 
+             form_data['workSetup'], form_data['companyName'], form_data['location'], 
+             form_data['salaryRange'], form_data['jobPostLink'], form_data['applicationDeadline'])
+        )
+        db.commit()
+        cur.close()
+        
+        flash('Job posted successfully!', 'success')
+        
+    except sqlite3.Error as e:
+        flash(f'Database error: {str(e)}', 'error')
+    
     return redirect(url_for('datajobs'))
 
 @app.route('/check_login/', methods=['GET'])
 def check_login():
     """Check if the user is logged in and redirect accordingly."""
     if 'username' in session:
-        print('User is logged in!')
+        app.logger.info(f'User {session["username"]} accessed check_login - redirecting to datajobs')
         return redirect(url_for('datajobs'))  # Redirect to Data Jobs page
     else:
-        print('User is not logged in!')
+        app.logger.info('Unauthenticated user accessed check_login - redirecting to index')
         return redirect(url_for('index'))  # Redirect to homepage or login page
 
 @app.route('/startyourjourney', methods=['GET', 'POST'])
@@ -138,16 +388,25 @@ def startyourjourney():
         db = get_db()
         cur = db.cursor()
 
-        # Check if the username and password match in the database
-        cur.execute('SELECT * FROM user WHERE username = ? AND password = ?', (username, password))
-        user = cur.fetchone()
-        cur.close()
+        # Check if the username exists in the database
+        try:
+            cur.execute('SELECT * FROM user WHERE username = ?', (username,))
+            user = cur.fetchone()
+            cur.close()
 
-        if user:
-            session['username'] = username  # Store user in session
-            return redirect(url_for('dashboard'))  # Redirect to the dashboard page
-        else:
-            return 'Invalid credentials. <a href="/startyourjourney">Try again</a>'
+            # Verify the password (handle both plain text and hashed passwords)
+            if user and (user['password'] == password or check_password_hash(user['password'], password)):
+                session['username'] = username  # Store user in session
+                app.logger.info(f'Successful login for user: {username}')
+                return redirect(url_for('dashboard'))  # Redirect to the dashboard page
+            else:
+                app.logger.warning(f'Failed login attempt for username: {username}')
+                flash('Invalid credentials. Please try again.', 'error')
+                return render_template('startyourjourney.html')
+        except sqlite3.Error as e:
+            app.logger.error(f'Database error during login: {str(e)}')
+            flash('Database error occurred. Please try again later.', 'error')
+            return render_template('startyourjourney.html')
 
     db = get_db()
     cur = db.cursor()
@@ -156,9 +415,14 @@ def startyourjourney():
     py4e_columns = [f'PY4E{i}' for i in range(1, 19)]
     py4e_done_counts = {}
 
+    # Safe approach: use allowed column names to prevent SQL injection
+    allowed_columns = {f'PY4E{i}' for i in range(1, 19)}
+    
     for column in py4e_columns:
-        cur.execute(f'SELECT COUNT(*) FROM user WHERE {column} = "Done"')
-        py4e_done_counts[column] = cur.fetchone()[0]
+        # Validate column name against allowed list
+        if column in allowed_columns:
+            cur.execute(f'SELECT COUNT(*) FROM user WHERE {column} = ?', ("Done",))
+            py4e_done_counts[column] = cur.fetchone()[0]
 
     # Query to get the total number of enrollments
     cur.execute("SELECT COUNT(*) FROM user")
@@ -214,19 +478,24 @@ def dashboard():
         total_done_count = 0  # Total number of 'Done' values
         google_form_count = 0  # Variable for Google Form count
 
+        # Safe approach: use allowed column names to prevent SQL injection
+        allowed_columns = {f'PY4E{i}' for i in range(1, 19)}
+        
         # Query counts
         for column in py4e_columns:
-            cur.execute(f'SELECT COUNT(*) FROM user WHERE {column} = "Done"')
-            done_count = cur.fetchone()[0]
-            py4e_done_counts[column] = done_count
-            total_done_count += done_count  # Total 'Done' count
+            # Validate column name against allowed list
+            if column in allowed_columns:
+                cur.execute(f'SELECT COUNT(*) FROM user WHERE {column} = ?', ("Done",))
+                done_count = cur.fetchone()[0]
+                py4e_done_counts[column] = done_count
+                total_done_count += done_count  # Total 'Done' count
 
-            cur.execute(f'''
-                SELECT COUNT(*) FROM user
-                WHERE {column} = "Done" AND Nickname IS NOT NULL
-            ''')
-            nickname_count = cur.fetchone()[0]
-            py4e_nickname_counts[column] = nickname_count
+                cur.execute(f'''
+                    SELECT COUNT(*) FROM user
+                    WHERE {column} = ? AND Nickname IS NOT NULL
+                ''', ("Done",))
+                nickname_count = cur.fetchone()[0]
+                py4e_nickname_counts[column] = nickname_count
 
         # Count for Google Form registrations
         cur.execute('SELECT COUNT(*) FROM user WHERE Nickname IS NOT NULL')
@@ -253,8 +522,8 @@ def dashboard():
         ax.set_xticks(range(len(lesson_labels)))  # Set the x-ticks to the range of labels
         ax.set_xticklabels(lesson_labels, fontsize=10)  # Set explicit labels without counts
 
-        # Debugging prints to check x-tick labels
-        print("X-axis labels:", lesson_labels)
+        # Log chart generation for debugging if needed
+        app.logger.debug("Generated chart with %d lesson labels", len(lesson_labels))
 
         # Add labels on top of the bars without changing x-axis labels
         for i, bar in enumerate(bars):
