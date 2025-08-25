@@ -36,6 +36,7 @@ if not app.debug:  # Only log to file in production
 # Database configuration
 DATABASE = os.environ.get('CITIZENDEVS_DB_PATH', './citizendevs.db')
 DATAJOBS_DATABASE = os.environ.get('DATAJOBS_DB_PATH', './datajobs.db')
+LESSONS_FILE = os.environ.get('LESSONS_FILE_PATH', './lessons.txt')
 
 def get_db(db_name=None):
     """Open a new database connection if there is none yet for the current application context."""
@@ -581,9 +582,7 @@ def update(username):
 
         return redirect(url_for("dashboard"))
     else:
-        #fn = "/home/engramar/thepusoproject/lessons.txt"
-        fn = "./lessons.txt"
-        with open(fn) as fh:
+        with open(LESSONS_FILE) as fh:
             lessons = [line.rstrip() for line in fh.readlines()]
 
         db = get_db()
