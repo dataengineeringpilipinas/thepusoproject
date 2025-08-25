@@ -11,6 +11,10 @@ import re
 from urllib.parse import urlparse
 import logging
 from logging.handlers import RotatingFileHandler
+from dotenv import load_dotenv
+
+# Load environment variables from .env file
+load_dotenv()
 
 app = Flask(__name__)
 # Use environment variable for secret key, generate secure random key as fallback
