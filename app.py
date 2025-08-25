@@ -11,6 +11,10 @@ import re
 from urllib.parse import urlparse
 import logging
 from logging.handlers import RotatingFileHandler
+from dotenv import load_dotenv
+
+# Load environment variables from .env file
+load_dotenv()
 
 app = Flask(__name__)
 # Use environment variable for secret key, generate secure random key as fallback
@@ -30,8 +34,8 @@ if not app.debug:  # Only log to file in production
     app.logger.info('Puso Project startup')
 
 # Database configuration
-#DATABASE = '/home/engramar/thepusoproject/citizendevs.db'
-DATABASE = './citizendevs.db'
+DATABASE = os.environ.get('CITIZENDEVS_DB_PATH', './citizendevs.db')
+DATAJOBS_DATABASE = os.environ.get('DATAJOBS_DB_PATH', './datajobs.db')
 
 def get_db(db_name=None):
     """Open a new database connection if there is none yet for the current application context."""
@@ -300,8 +304,7 @@ def logout():
 
 @app.route('/datajobs/', methods=['GET'])
 def datajobs():
-    #db = get_db('/home/engramar/thepusoproject/datajobs.db')  # Use datajobs.db
-    db = get_db('./datajobs.db')  # Use datajobs.db
+    db = get_db(DATAJOBS_DATABASE)  # Use datajobs.db
     cur = db.cursor()
 
     # Create the user table if it doesn't exist
@@ -344,7 +347,7 @@ def post_job():
     
     # Insert job data into database
     try:
-        db = get_db('./datajobs.db')
+        db = get_db(DATAJOBS_DATABASE)
         cur = db.cursor()
         
         # Create table if it doesn't exist
@@ -598,7 +601,7 @@ def deptalents():
 @app.route('/datadeepdive')
 def datadeepdive():
     # Fetch data from datajobs database
-    db = get_db('./datajobs.db')
+    db = get_db(DATAJOBS_DATABASE)
     cur = db.cursor()
     
     # Create the datajobs table if it doesn't exist
