@@ -215,7 +215,7 @@ def get_py4e_completion_counts(db):
     cur.close()
     return py4e_done_counts
 
-def generate_py4e_chart(py4e_counts, total_enrollments, save_path='static/py4e_progress.png'):
+def generate_py4e_chart(py4e_counts, total_enrollments, save_path=None):
     """Generate and save PY4E progress chart."""
     try:
         fig, ax = plt.subplots(figsize=(12, 6))
@@ -243,12 +243,15 @@ def generate_py4e_chart(py4e_counts, total_enrollments, save_path='static/py4e_p
             ax.text(x_position, height + 0.1, str(int(height)), 
                    ha='center', va='bottom', fontsize=9)
         
-        # Save chart
+        # Save chart with absolute path
+        if save_path is None:
+            save_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'static', 'py4e_progress.png')
+        
         plt.tight_layout()
         plt.savefig(save_path, dpi=300, bbox_inches='tight')
         plt.close()
         
-        app.logger.debug("Generated chart with %d lesson labels", len(lesson_labels))
+        app.logger.info(f"Generated chart with {len(lesson_labels)} lesson labels, saved to {save_path}")
         return save_path
         
     except Exception as e:
@@ -455,11 +458,17 @@ def startyourjourney():
 
     plt.tight_layout()
 
-    # Save the plot
-    #img_path = os.path.join('/home/engramar/thepusoproject/static', 'py4e_progress.png')        
-    img_path = os.path.join('static', 'py4e_progress.png')
-    plt.savefig(img_path)
-    plt.close()
+    # Save the plot with absolute path and error handling
+    try:
+        img_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'static', 'py4e_progress.png')
+        plt.savefig(img_path, dpi=300, bbox_inches='tight')
+        plt.close()
+        app.logger.info(f"Chart saved successfully to {img_path}")
+    except Exception as e:
+        app.logger.error(f"Error saving chart: {str(e)}")
+        plt.close()
+        # Fallback: try using the generate_py4e_chart function
+        generate_py4e_chart(py4e_done_counts, total_enrollments)
 
     return render_template('startyourjourney.html', graph_url=url_for('static', filename='py4e_progress.png'), total_enrollments=total_enrollments)
 
@@ -548,11 +557,17 @@ def dashboard():
         # Adjust layout to make space for the headers and avoid truncation
         plt.subplots_adjust(left=0.1, right=0.95, top=0.85, bottom=0.25)
 
-        # Save the plot as an image        
-        #img_path = os.path.join('/home/engramar/thepusoproject/static', 'py4e_progress.png')        
-        img_path = os.path.join('static', 'py4e_progress.png')
-        plt.savefig(img_path)
-        plt.close()
+        # Save the plot as an image with absolute path and error handling
+        try:
+            img_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'static', 'py4e_progress.png')
+            plt.savefig(img_path, dpi=300, bbox_inches='tight')
+            plt.close()
+            app.logger.info(f"Dashboard chart saved successfully to {img_path}")
+        except Exception as e:
+            app.logger.error(f"Error saving dashboard chart: {str(e)}")
+            plt.close()
+            # Fallback: try using the generate_py4e_chart function  
+            generate_py4e_chart(py4e_done_counts, total_enrollments)
 
         # Render the dashboard with the plot
         return render_template("dashboard.html", username=username, users=users, user_status=user_status, graph_url=url_for('static', filename='py4e_progress.png'))
