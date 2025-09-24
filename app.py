@@ -203,8 +203,10 @@ def ensure_datajobs_table_exists(db):
 def get_py4e_completion_counts(db):
     """Get completion counts for all PY4E lessons."""
     cur = db.cursor()
-    py4e_columns = [f'PY4E{i}' for i in range(1, 19)]
-    allowed_columns = {f'PY4E{i}' for i in range(1, 19)}
+    py4e_columns = [f'PY4E{i}' for i in range(1, 12)]
+    # py4e_columns = [f'PY4E{i}' for i in range(1, 19)]
+    allowed_columns = {f'PY4E{i}' for i in range(1, 12)}
+    # allowed_columns = {f'PY4E{i}' for i in range(1, 19)}
     py4e_done_counts = {}
     
     for column in py4e_columns:
@@ -232,7 +234,8 @@ def generate_py4e_chart(py4e_counts, total_enrollments, save_path=None):
         ax.grid(True, alpha=0.3)
         
         # Set x-axis labels
-        lesson_labels = [f'PY4E{i}' for i in range(1, 19)]
+        lesson_labels = [f'PY4E{i}' for i in range(1, 12)]
+        # lesson_labels = [f'PY4E{i}' for i in range(1, 19)]
         ax.set_xticks(range(len(lesson_labels)))
         ax.set_xticklabels(lesson_labels, fontsize=10)
         
@@ -419,11 +422,13 @@ def startyourjourney():
     cur = db.cursor()
 
     # Fetch completion counts for each PY4E lesson
-    py4e_columns = [f'PY4E{i}' for i in range(1, 19)]
+    py4e_columns = [f'PY4E{i}' for i in range(1, 12)]
+    # py4e_columns = [f'PY4E{i}' for i in range(1, 19)]
     py4e_done_counts = {}
 
     # Safe approach: use allowed column names to prevent SQL injection
-    allowed_columns = {f'PY4E{i}' for i in range(1, 19)}
+    allowed_columns = {f'PY4E{i}' for i in range(1, 12)}
+    # allowed_columns = {f'PY4E{i}' for i in range(1, 19)}
     
     for column in py4e_columns:
         # Validate column name against allowed list
@@ -484,7 +489,8 @@ def dashboard():
         users = cur.fetchall()
 
         # Initialize counts
-        py4e_columns = [f'PY4E{i}' for i in range(1, 19)]
+        py4e_columns = [f'PY4E{i}' for i in range(1, 12)]
+        # py4e_columns = [f'PY4E{i}' for i in range(1, 19)]
         py4e_done_counts = {}
         py4e_nickname_counts = {}
 
@@ -492,7 +498,8 @@ def dashboard():
         google_form_count = 0  # Variable for Google Form count
 
         # Safe approach: use allowed column names to prevent SQL injection
-        allowed_columns = {f'PY4E{i}' for i in range(1, 19)}
+        allowed_columns = {f'PY4E{i}' for i in range(1, 12)}
+        # allowed_columns = {f'PY4E{i}' for i in range(1, 19)}
         
         # Query counts
         for column in py4e_columns:
@@ -515,7 +522,8 @@ def dashboard():
         google_form_count = cur.fetchone()[0]
 
         # Query to get the status of the logged-in user
-        cur.execute("SELECT PY4E1, PY4E2, PY4E3, PY4E4, PY4E5, PY4E6, PY4E7, PY4E8, PY4E9, PY4E10, PY4E11, PY4E12, PY4E13, PY4E14, PY4E15, PY4E16, PY4E17, PY4E18 FROM user WHERE username=?", (username,))
+        cur.execute("SELECT PY4E1, PY4E2, PY4E3, PY4E4, PY4E5, PY4E6, PY4E7, PY4E8, PY4E9, PY4E10, PY4E11 FROM user WHERE username=?", (username,))
+        # cur.execute("SELECT PY4E1, PY4E2, PY4E3, PY4E4, PY4E5, PY4E6, PY4E7, PY4E8, PY4E9, PY4E10, PY4E11, PY4E12, PY4E13, PY4E14, PY4E15, PY4E16, PY4E17, PY4E18 FROM user WHERE username=?", (username,))
         user_status = cur.fetchone()  # Fetch the status row for the logged-in user
 
         # Close the database connection
@@ -531,7 +539,8 @@ def dashboard():
         ax.tick_params(axis='x', rotation=45)
 
         # Set x-axis labels directly to the lesson identifiers
-        lesson_labels = [f'PY4E{i}' for i in range(1, 19)]
+        lesson_labels = [f'PY4E{i}' for i in range(1, 12)]
+        # lesson_labels = [f'PY4E{i}' for i in range(1, 19)]
         ax.set_xticks(range(len(lesson_labels)))  # Set the x-ticks to the range of labels
         ax.set_xticklabels(lesson_labels, fontsize=10)  # Set explicit labels without counts
 
@@ -578,11 +587,15 @@ def dashboard():
 def update(username):
     if request.method == "POST":
         status_values = [
-            request.form[f"status{i}"] for i in range(1, 19)
-        ]  # Status values for PY4E1 to PY4E18
+            request.form[f"status{i}"] for i in range(1, 12)
+        ]  # Status values for PY4E1 to PY4E11
+        # status_values = [
+        #     request.form[f"status{i}"] for i in range(1, 19)
+        # ]  # Status values for PY4E1 to PY4E18
 
         query = "UPDATE user SET "
-        query += ", ".join([f"PY4E{i} = ?" for i in range(1, 19)])
+        query += ", ".join([f"PY4E{i} = ?" for i in range(1, 12)])
+        # query += ", ".join([f"PY4E{i} = ?" for i in range(1, 19)])
         query += ", last_update = ?"  # Add last_update column
         query += " WHERE username = ?"
 

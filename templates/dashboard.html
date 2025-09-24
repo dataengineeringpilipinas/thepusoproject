@@ -23,13 +23,16 @@
                 <thead>
                     <tr>
                         <th>Course</th>
-                        {% for num in range(1, 19) %}
+                        {% for num in range(1, 12) %}
                             <th>{{ num }}</th>
                         {% endfor %}
+                        <!-- {% for num in range(12, 19) %}
+                            <th>{{ num }}</th>
+                        {% endfor %} -->
                         <th>Action</th>
                     </tr>
                     <tr>
-                        <td colspan="{{ 19 }}">  <!-- Adjust colspan to match the number of columns -->
+                        <td colspan="{{ 13 }}">  <!-- Adjust colspan to match the number of columns -->
                             <div class="col-md-12">
                                 <a href="https://www.py4e.com/lessons" target="_blank" style="font-size: 12px;">Link to PY4E Website</a> 
                             </div>
@@ -39,7 +42,7 @@
                 <tbody>
                     <tr class="small-row">
                         <td>PY4E</td>
-                        {% for status in user_status %}
+                        {% for status in user_status[:11] %}
                             <td>
                                 {% if status == "Done" %}
                                     <img src="/static/donetick.png" alt="Done" style="width: 15px; height: 15px; vertical-align: middle;">
@@ -48,6 +51,15 @@
                                 {% endif %}
                             </td>
                         {% endfor %}
+                        <!-- {% for status in user_status[11:] %}
+                            <td>
+                                {% if status == "Done" %}
+                                    <img src="/static/donetick.png" alt="Done" style="width: 15px; height: 15px; vertical-align: middle;">
+                                {% else %}
+                                    <img src="/static/todotick.png" alt="Not Done" style="width: 15px; height: 15px; vertical-align: middle;">
+                                {% endif %}
+                            </td>
+                        {% endfor %} -->
                         <td>
                             <a href="{{ url_for('update', username=username) }}" class="btn btn-primary">Update</a>
                         </td>

@@ -21,7 +21,7 @@
         <h5>CitizenDev {{ username }}</h5>                
 
         <form method="post">
-            {% for i in range(1, 19) %}
+            {% for i in range(1, 12) %}
                 <div class="mb-3">
                     <label for="status{{ i }}" class="form-label">{{ lessons[i-1] }}</label>
                     <select class="form-select" id="status{{ i }}" name="status{{ i }}">
@@ -31,6 +31,15 @@
                     </select>
                 </div>
             {% endfor %}
+            <!-- {% for i in range(12, 19) %}
+                <div class="mb-3">
+                    <label for="status{{ i }}" class="form-label">{{ lessons[i-1] }}</label>
+                    <select class="form-select" id="status{{ i }}" name="status{{ i }}">
+                        <option value="To Do" {% if user['PY4E' + loop.index|string] == 'To Do' %} selected {% endif %}>To Do</option>
+                        <option value="Done" {% if user['PY4E' + loop.index|string] == 'Done' %} selected {% endif %}>Done</option>
+                    </select>
+                </div>
+            {% endfor %} -->
             <button type="submit" class="btn btn-primary">Update</button>
         </form>        
                 
