@@ -125,6 +125,7 @@
     .tag.agriculture { background: #f8f9fa; color: #333; border-color: #28a745; }
     .tag.migration { background: #f8f9fa; color: #333; border-color: #17a2b8; }
     .tag.energy { background: #f8f9fa; color: #333; border-color: #ffc107; }
+    .tag.justice { background: #f8f9fa; color: #333; border-color: #6f42c1; }
     
     .stats-section {
         background: white;
@@ -266,6 +267,7 @@
         <button class="filter-btn" onclick="filterDatasets('energy')">Energy</button>
         <button class="filter-btn" onclick="filterDatasets('health')">Health</button>
         <button class="filter-btn" onclick="filterDatasets('economy')">Economy</button>
+        <button class="filter-btn" onclick="filterDatasets('justice')">Justice</button>
     </div>
 
     <!-- Datasets Grid -->
@@ -524,6 +526,26 @@
                 </div>
                 <div class="mt-3">
                     <a href="https://ourworldindata.org/grapher/share-of-population-in-extreme-poverty?tab=line&time=earliest..2023&country=~PHL" target="_blank" class="btn btn-outline-dark btn-sm">
+                        <i class="fas fa-external-link-alt"></i> View Dataset
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Bureau of Jail Management and Penology -->
+        <div class="col-lg-6 col-xl-4 dataset-item" data-category="justice" data-search="bureau jail management penology bjmp justice corrections penal system">
+            <div class="dataset-card">
+                <img src="{{ url_for('static', filename='d3/BJMP.png') }}" alt="Bureau of Jail Management and Penology" class="card-image">
+                <h5 class="dataset-title">Bureau of Jail Management and Penology</h5>
+                <p class="dataset-description">Analyze jail management and penology data to understand corrections system patterns, inmate demographics, and facility management insights.</p>
+                <div class="dataset-meta">
+                    <span><i class="fas fa-calendar"></i> Posted: 2025-09-28</span>
+                </div>
+                <div class="dataset-tags">
+                    <span class="tag justice">Justice</span>
+                </div>
+                <div class="mt-3">
+                    <a href="https://data.gov.ph/index/public/dataset/Bureau%20of%20Jail%20Management%20and%20Penology/dxzjlad7-i5qt-nyhi-jhix-5a7wzxnwuorf" target="_blank" class="btn btn-outline-dark btn-sm">
                         <i class="fas fa-external-link-alt"></i> View Dataset
                     </a>
                 </div>
