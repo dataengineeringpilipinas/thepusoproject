@@ -27,14 +27,14 @@
         }
 
         .navbar-brand img {
-            height: 30px;
+            height: 100px;
             width: auto;
             margin-right: 10px;
         }
 
         .content-wrapper {
             flex: 1 0 auto; /* This makes the content grow and push the footer down */
-            padding-top: 56px; /* Adjust based on your navbar height */
+            padding-top: 120px; /* Adjust based on your navbar height */
         }
 
         .content {
@@ -70,7 +70,7 @@
     <nav class="navbar navbar-expand-lg navbar-light navbar-custom fixed-top">
         <div class="container-fluid">
             <a class="navbar-brand" href="{{ url_for('index') }}">
-                <img src="{{ url_for('static', filename='tppheart.png') }}" alt="The Puso Project Logo">
+                <img src="{{ url_for('static', filename='tpp_label.svg') }}" alt="The Puso Project Logo" height="100">
             </a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
@@ -79,15 +79,23 @@
                 <ul class="navbar-nav me-auto">
                     <li class="nav-item mx-2"><a class="nav-link" href="{{ url_for('startyourjourney') }}">Start Your Journey</a></li>
                     <!-- <li class="nav-item mx-2"><a class="nav-link" href="{{ url_for('datajobs') }}">Data Jobs</a></li> -->
-                    <li class="nav-item mx-2"><a class="nav-link" href="{{ url_for('datadeepdive') }}">DEP Data Deep Dive</a></li>                    
-                    <li class="nav-item mx-2"><a class="nav-link" href="{{ url_for('solutions') }}">DEP Solutions</a></li>                    
-                    <li class="nav-item mx-2"><a class="nav-link" href="{{ url_for('deptalents') }}">DEP Talents</a></li>                    
+                    <li class="nav-item mx-2"><a class="nav-link" href="{{ url_for('datadeepdive') }}">Data Deep Dive</a></li>                    
+                    <li class="nav-item mx-2"><a class="nav-link" href="{{ url_for('solutions') }}">Barangay DEP</a></li>                    
+                    <li class="nav-item mx-2"><a class="nav-link" href="{{ url_for('deptalents') }}">CitizenDevs</a></li>                    
+                </ul>
+                <ul class="navbar-nav ms-auto">
                     <li class="nav-item dropdown mx-2">
-                        <a class="nav-link dropdown-toggle" href="#" id="programsDropdown" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            DEP Programs
+                        <a class="nav-link dropdown-toggle" href="#" id="aboutDropdown" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            About DEP
                         </a>
-                        <ul class="dropdown-menu" aria-labelledby="programsDropdown">
-                            <li><a class="dropdown-item" href="https://dataengineering.ph/" target="_blank">DEP Website</a></li>
+                        <ul class="dropdown-menu" aria-labelledby="aboutDropdown">
+                            <li><a class="dropdown-item" href="{{ url_for('aboutdep') }}">About DEP</a></li>
+                            <li><hr class="dropdown-divider"></li>
+                            <li><a class="dropdown-item" href="{{ url_for('sandbox') }}">Sandbox</a></li>
+                            <li><a class="dropdown-item" href="{{ url_for('developers') }}">Developers</a></li>
+                            <li><a class="dropdown-item" href="{{ url_for('mentors') }}">Mentors</a></li>
+                            <li><hr class="dropdown-divider"></li>
+                            <li><h6 class="dropdown-header">DEP Programs</h6></li>
                             <li><a class="dropdown-item" href="https://datamasters-2025-w9xbevp.gamma.site/?fbclid=IwY2xjawJb12NleHRuA2FlbQIxMAABHXzfSkIoSV59vJslPt58x_CYDgKYCoEz0TAz4QnUzkOuJwgcKQSYAJWBDw_aem_hfFj9OGLysaWUkL5hc2Cxg" target="_blank">DEP DataMasters</a></li>
                             <li><a class="dropdown-item" href="https://dataengineering.ph/community.html#projects" target="_blank">DEP Project Challenges</a></li>
                             <li><a class="dropdown-item" href="https://github.com/dataengineeringpilipinas/datahub" target="_blank">DEP DataHub</a></li>
@@ -98,12 +106,6 @@
                             <li><a class="dropdown-item" href="#">Humans of DEP</a></li>
                         </ul>
                     </li>
-                </ul>
-                <ul class="navbar-nav ms-auto">
-                    <li class="nav-item mx-2"><a class="nav-link" href="{{ url_for('sandbox') }}">Sandbox</a></li>
-                    <li class="nav-item mx-2"><a class="nav-link" href="{{ url_for('developers') }}">Developers</a></li>
-                    <li class="nav-item mx-2"><a class="nav-link" href="{{ url_for('mentors') }}">Mentors</a></li>
-                    <li class="nav-item mx-2"><a class="nav-link" href="{{ url_for('aboutdep') }}">About DEP</a></li>
                 </ul>
             </div>
         </div>
