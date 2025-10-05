@@ -209,13 +209,11 @@
 <div class="search-section">
     <div class="container">
         <div class="search-container text-center">
+            <img src="{{ url_for('static', filename='data-deep-dive.svg') }}" alt="Data Deep Dive Logo" class="mb-3" width="200">
             <h1 class="mb-4">Data Deep Dive</h1>
             <p class="mb-4">Unlocking insights, one PH open dataset at a time.</p>
             <div class="search-box">
                 <input type="text" class="search-input" id="searchInput" placeholder="Search data analysis projects...">
-                <button class="search-btn" onclick="searchDatasets()">
-                    <i class="fas fa-search"></i> Search
-                </button>
             </div>
         </div>
     </div>
@@ -623,14 +621,9 @@ function filterDatasets(category) {
     document.getElementById('totalDatasets').textContent = visibleCount;
 }
 
-// Search on Enter key press
-document.getElementById('searchInput').addEventListener('keypress', function(e) {
-    if (e.key === 'Enter') {
-        searchDatasets();
-    }
+// Real-time search as user types
+document.getElementById('searchInput').addEventListener('input', function(e) {
+    searchDatasets();
 });
-
-// Real-time search (optional - uncomment if you want instant search)
-// document.getElementById('searchInput').addEventListener('input', searchDatasets);
 </script>
 {% endblock %}
