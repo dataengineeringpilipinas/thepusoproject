@@ -3,8 +3,62 @@
 {% block title %}Solutions - The Puso Project{% endblock %}
 
 {% block content %}
-    <div class="text-center">
-        <h1>Solutions</h1>
+<style>
+    .search-section {
+        background: #f8f9fa;
+        color: #333;
+        padding: 3rem 0;
+        margin-bottom: 2rem;
+        border-bottom: 1px solid #e9ecef;
+    }
+    
+    .search-container {
+        max-width: 800px;
+        margin: 0 auto;
+    }
+    
+    .search-box {
+        max-width: 800px;
+        margin: 0 auto;
+        position: relative;
+    }
+    
+    .search-input {
+        width: 100%;
+        padding: 15px 20px;
+        border: 2px solid #e9ecef;
+        border-radius: 6px;
+        font-size: 16px;
+        background-color: #ffffff;
+        transition: border-color 0.3s ease;
+    }
+    
+    .search-input:focus {
+        outline: none;
+        border-color: #333;
+        box-shadow: 0 0 0 3px rgba(0,0,0,0.1);
+    }
+    
+    .project-item {
+        transition: opacity 0.3s ease;
+    }
+    
+    .hidden {
+        display: none !important;
+    }
+</style>
+    <!-- Search Section -->
+    <div class="search-section">
+        <div class="container">
+            <div class="search-container text-center">
+                <img src="{{ url_for('static', filename='barangay-dep.svg') }}" alt="Barangay DEP Logo" class="mb-3" width="200">
+                <h1 class="mb-4">Barangay DEP</h1>
+                <p class="mb-4">Building a Better Philippines, One Barangay at a Time.</p>
+                <div class="search-box">
+                    <input type="text" class="search-input" id="searchInput" placeholder="Search barangay projects...">
+                </div>
+            </div>
+        </div>
     </div>
 
     <!-- Card Grid -->
@@ -12,7 +66,7 @@
         <div class="row g-4">
     
         <!-- Card -->
-        <div class="col-sm-6 col-md-4">
+        <div class="col-sm-6 col-md-4 project-item" data-search="barangay ticketing system appointment citation management community service engramar bollas">
             <a href="#" target="_blank" class="text-decoration-none">
             <div class="card border-0 shadow-sm h-100">
                                 <!-- Card Body with Content -->
@@ -57,7 +111,7 @@
         </div>
 
         <!-- Card -->
-        <div class="col-sm-6 col-md-4">
+        <div class="col-sm-6 col-md-4 project-item" data-search="barangay tanod tracker security monitoring patrol coordination engramar bollas">
             <a href="#" target="_blank" class="text-decoration-none">
             <div class="card border-0 shadow-sm h-100">
                 
@@ -102,7 +156,7 @@
         </div>
 
         <!-- Card -->
-        <div class="col-sm-6 col-md-4">
+        <div class="col-sm-6 col-md-4 project-item" data-search="online sumbong complaint classification tagalog xlm-roberta machine learning john jomari arubio">
             <a href="#" target="_blank" class="text-decoration-none">
             <div class="card border-0 shadow-sm h-100">
                 
@@ -147,7 +201,7 @@
         </div>        
 
         <!-- Card -->
-        <div class="col-sm-6 col-md-4">
+        <div class="col-sm-6 col-md-4 project-item" data-search="barangay explorer psgc geographic code python package manuel balmeo">
             <a href="https://pypi.org/project/barangay/?fbclid=IwY2xjawMSjXdleHRuA2FlbQIxMQABHlf58spcU4Gxjhx4ce-d8ew10ceaT07gcDK22zI2806pxa4KA5c68WL1zuJ5_aem_b9RMh8OdExEAYWV6gZSEhQ" target="_blank" class="text-decoration-none">
             <div class="card border-0 shadow-sm h-100">
                 
@@ -192,7 +246,7 @@
         </div>
 
         <!-- Card -->
-        <div class="col-sm-6 col-md-4">
+        <div class="col-sm-6 col-md-4 project-item" data-search="barangay transparency dashboard governance accountability budget tracking john jomari arubio">
             <a href="https://github.com/pyjom/barangay-transparency-dashboard" target="_blank" class="text-decoration-none">
             <div class="card border-0 shadow-sm h-100">
                 
@@ -246,6 +300,33 @@
     <script type="text/javascript" src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
     <script type="text/javascript" src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
     <script type="text/javascript" src="https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap5.min.js"></script>
+
+    <!-- Search Functionality -->
+    <script>
+        function searchProjects() {
+            const searchTerm = document.getElementById('searchInput').value.toLowerCase();
+            const projects = document.querySelectorAll('.project-item');
+            let visibleCount = 0;
+
+            projects.forEach(project => {
+                const searchData = project.getAttribute('data-search').toLowerCase();
+                const title = project.querySelector('.card-title').textContent.toLowerCase();
+                const description = project.querySelector('.card-text').textContent.toLowerCase();
+                
+                if (searchData.includes(searchTerm) || title.includes(searchTerm) || description.includes(searchTerm)) {
+                    project.classList.remove('hidden');
+                    visibleCount++;
+                } else {
+                    project.classList.add('hidden');
+                }
+            });
+        }
+
+        // Real-time search as user types
+        document.getElementById('searchInput').addEventListener('input', function(e) {
+            searchProjects();
+        });
+    </script>
 
     <!-- Initialize DataTable -->
     <script>
