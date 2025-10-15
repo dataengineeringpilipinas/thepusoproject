@@ -667,8 +667,8 @@ def aboutdep():
 def contact():
     return render_template('contact.html')
 
-@app.route('/solutions')
-def solutions():
+@app.route('/barangaydep')
+def barangaydep():
     return render_template('solutions.html')
 
 @app.route('/developers')
