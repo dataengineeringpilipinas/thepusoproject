@@ -225,7 +225,7 @@
         <div class="row">
             <div class="col-md-3">
                 <div class="stat-item">
-                    <span class="stat-number" id="totalDatasets">6</span>
+                    <span class="stat-number" id="totalDatasets">17</span>
                     <span class="stat-label">Data Analysis Projects</span>
                 </div>
             </div>
@@ -266,6 +266,7 @@
         <button class="filter-btn" onclick="filterDatasets('health')">Health</button>
         <button class="filter-btn" onclick="filterDatasets('economy')">Economy</button>
         <button class="filter-btn" onclick="filterDatasets('justice')">Justice</button>
+        <button class="filter-btn" onclick="filterDatasets('education')">Education</button>
     </div>
 
     <!-- Datasets Grid -->
@@ -311,7 +312,7 @@
         </div>
 
         <!-- Department of Education Masterlist -->
-        <div class="col-lg-6 col-xl-4 dataset-item" data-category="transportation" data-search="department of education masterlist schools">
+        <div class="col-lg-6 col-xl-4 dataset-item" data-category="education" data-search="department of education masterlist schools">
             <div class="dataset-card">
                 <img src="{{ url_for('static', filename='d3/DE-Schools.png') }}" alt="Department of Education Schools" class="card-image">
                 <h5 class="dataset-title">Department of Education - Masterlist of Schools</h5>
@@ -320,7 +321,7 @@
                     <span><i class="fas fa-calendar"></i> Posted: 2025-06-27</span>
                 </div>
                 <div class="dataset-tags">
-                    <span class="tag transportation">Transportation</span>
+                    <span class="tag education">Education</span>
                 </div>
                 <div class="mt-3">
                     <a href="https://github.com/dataengineeringpilipinas/datahub/issues/19" target="_blank" class="btn btn-outline-dark btn-sm">
@@ -569,6 +570,26 @@
                 </div>
             </div>
         </div>
+
+        <!-- National Achievement Test (NAT) -->
+        <div class="col-lg-6 col-xl-4 dataset-item" data-category="education" data-search="national achievement test nat grade 6 deped education assessment">
+            <div class="dataset-card">
+                <img src="{{ url_for('static', filename='NAT.png') }}" alt="National Achievement Test" class="card-image">
+                <h5 class="dataset-title">National Achievement Test (NAT) - Grade 6</h5>
+                <p class="dataset-description">Analyze National Achievement Test results for Grade 6 students to understand educational performance patterns, identify learning gaps, and assess curriculum effectiveness across different regions and schools.</p>
+                <div class="dataset-meta">
+                    <span><i class="fas fa-calendar"></i> Posted: 2025-10-20</span>
+                </div>
+                <div class="dataset-tags">
+                    <span class="tag education">Education</span>
+                </div>
+                <div class="mt-3">
+                    <a href="https://www.deped.gov.ph/machine-ready-files/" target="_blank" class="btn btn-outline-dark btn-sm">
+                        <i class="fas fa-external-link-alt"></i> View Dataset
+                    </a>
+                </div>
+            </div>
+        </div>
     </div>
 
     <!-- About Section -->
@@ -579,19 +600,8 @@
             <a href="https://data.gov.ph/" target="_blank">data.gov.ph</a> <br/>
             <a href="https://openstat.psa.gov.ph/" target="_blank">openstat.psa.gov.ph</a> <br/>
             <a href="https://ourworldindata.org/country/philippines" target="_blank">ourworldindata.org</a> <br/>
-        </ul>            
-        <p>Work on the published data in <a href="https://www.thepusoproject.ph/datajobs/" target="_blank">Data Jobs</a></p>
-        <ol>
-            <li>Perform data cleaning and wrangling.</li>
-            <li>Conduct exploratory data analysis.</li>
-            <li>Create visualizations to highlight key insights.</li>
-            <li>Write a short summary of your findings and recommendations.</li>
-            <li>Submit your work to the <a href="https://github.com/dataengineeringpilipinas/datahub/blob/main/docs/CONTRIBUTING.md" target="_blank">DEP DataHub</a></li>
-            <li>Each month, we'll go through all submissions and pick one outstanding entry as our monthly winner. The winner will be published in <a href="https://www.thepusoproject.ph/deptalents" target="_blank">DEP Talents</a> page.</li>
-        </ol>
-        <p class="mt-3">
-            For more detailed project listings, visit our <a href="{{ url_for('datajobs') }}" target="_blank">Data Jobs</a> page.
-        </p>
+            <a href="https://www.deped.gov.ph/machine-ready-files/" target="_blank">deped.gov.ph</a> <br/>
+        </ul>
     </div>
 </div>
 
