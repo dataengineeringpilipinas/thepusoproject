@@ -669,7 +669,7 @@ def contact():
 
 @app.route('/barangaydep')
 def barangaydep():
-    return render_template('solutions.html')
+    return render_template('barangaydep.html')
 
 @app.route('/developers')
 def developers():
